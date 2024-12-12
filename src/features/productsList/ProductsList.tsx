@@ -14,7 +14,7 @@ const ProductsList = () => {
 
     return (
         <>
-            <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
+            <Typography variant="h5" sx={{ marginBottom: '20px' }}>
                 Twoje towary
             </Typography>
             <Box

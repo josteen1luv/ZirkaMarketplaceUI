@@ -27,12 +27,16 @@ const DashBoardMenu = ({
     return (
         <Box
             sx={{
-                width: '250px',
+                width: '231px',
                 backgroundColor: 'primary.main',
                 padding: '20px',
                 borderRadius: '12px',
                 boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
                 margin: '20px',
+                maxHeight: '410px',
+                minWidth: '231px',
+                position: "sticky",
+                top: 100,
             }}
         >
             <Typography

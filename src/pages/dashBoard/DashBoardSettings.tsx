@@ -47,6 +47,7 @@ const DashBoardSettings = ({ user }: { user: User }) => {
                 errorData?.message ||
                 'An error occurred.';
             alert('Updating failed: ' + errorMessage);
+            handleStopEditing();
         }
     };
     return (
@@ -218,7 +219,6 @@ const DashBoardSettings = ({ user }: { user: User }) => {
                                         if (isValid) {
                                             await handleSubmit(onSubmit)();
                                         }
-                                        handleStopEditing();
                                     }}
                                 >
                                     Zapisz

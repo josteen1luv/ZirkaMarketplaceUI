@@ -1,6 +1,16 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Card, Typography, TextField, Button } from '@mui/material';
+import {
+    Box,
+    Card,
+    Typography,
+    TextField,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+} from '@mui/material';
 import { ProductForm } from '../../types/product.ts';
 import { usePostProductMutation } from '../../api/product/productApiSlice.ts';
 
@@ -9,6 +19,7 @@ const AddProductForm = () => {
         defaultValues: {
             name: '',
             description: '',
+            category: 0,
             price: 0,
             photoUrl: '',
             availableAmount: 0,
@@ -95,6 +106,35 @@ const AddProductForm = () => {
                                 },
                             }}
                         />
+                    )}
+                />
+                <Controller
+                    name="category"
+                    control={control}
+                    rules={{ required: 'Musisz wybrac kategorie' }}
+                    render={({ field, fieldState }) => (
+                        <FormControl
+                            fullWidth
+                            color="secondary"
+                            error={!!fieldState.error}
+                            variant="outlined"
+                        >
+                            <InputLabel id="category-label">
+                                Categoria
+                            </InputLabel>
+                            <Select
+                                {...field}
+                                size={'small'}
+                                label="Kategoria"
+                                sx={{
+                                    typography: 'body1',
+                                    height: '33px',
+                                }}
+                            >
+                                <MenuItem value={0}>Komputery</MenuItem>
+                                <MenuItem value={1}>Telefony</MenuItem>
+                            </Select>
+                        </FormControl>
                     )}
                 />
                 <Controller

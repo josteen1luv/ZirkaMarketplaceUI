@@ -17,7 +17,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRegistrationMutation } from '../../api/user/authApiSlice.ts';
 import { User } from '../../types/User.ts';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { Password } from '@mui/icons-material';
 export type RegisterUser = User & {
     password: string;
 };
