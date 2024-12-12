@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Box,
-    Typography,
-    Button,
-    TextField,
-    MenuItem,
-    Card,
-} from '@mui/material';
+import { Box } from '@mui/material';
 import { useGetUserQuery } from '../../api/user/authApiSlice.ts';
 import { useSelector } from 'react-redux';
 import { selectId } from '../../api/user/userSlice.ts';
@@ -34,39 +27,14 @@ const Dashboard = () => {
     };
     const [user, setUser] = useState(initial);
 
-    const [initialUser, setInitialUser] = useState(user);
-
     useEffect(() => {
         if (userInfo) {
             const { firstName, lastName, email, userName, role } = userInfo;
             const newUserState = { firstName, lastName, email, userName, role };
 
             setUser(newUserState);
-            setInitialUser(newUserState);
         }
     }, [userInfo]);
-
-    const handleChange = (
-        event:
-            | React.ChangeEvent<HTMLInputElement>
-            | { target: { name: string; value: string } },
-    ) => {
-        const { name, value } = event.target;
-        setUser((prevUser) => ({
-            ...prevUser,
-            [name]: value,
-        }));
-    };
-
-    const isFormValid = () => {
-        return (
-            user.firstName &&
-            user.lastName &&
-            user.email &&
-            user.userName &&
-            user.role
-        );
-    };
 
     return (
         <Box sx={{ display: 'flex', height: 'flex', margin: '80px' }}>

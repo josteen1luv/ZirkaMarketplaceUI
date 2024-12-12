@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { Home, Logout, Person, Settings } from '@mui/icons-material';
 import { useLogoutMutation } from '../../api/user/authApiSlice.ts';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const DashBoardMenu = ({
