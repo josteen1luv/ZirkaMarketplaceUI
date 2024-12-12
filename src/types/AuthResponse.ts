@@ -1,6 +1,6 @@
 export type AuthResponse = {
     accessToken: string;
     refreshToken: string;
-    id: string;
+    userId: string;
     role: 'Buyer' | 'Seller' | 'SystemAdministrator';
 };

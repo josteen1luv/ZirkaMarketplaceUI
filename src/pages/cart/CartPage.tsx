@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 import { Product } from '../../types/product.ts';
 import SingleProductItem from '../../features/singleProductItem/SingleProductItem.tsx';
 
-const MainPage = () => {
+const CartPage = () => {
     const products: Product[] | null = [
         {
             id: 'kindOfId',
@@ -12,6 +12,7 @@ const MainPage = () => {
             price: 100,
             photoUrl: '',
             availableAmount: 1,
+            userId: 'ss',
         },
     ];
     return (
@@ -36,4 +37,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default CartPage;

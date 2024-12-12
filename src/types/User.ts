@@ -3,5 +3,7 @@ export type User = {
     email: string;
     firstName: string;
     lastName: string;
-    role: 0 | 1 | 2;
+    role: Roles;
 };
+
+export type Roles = 0 | 1 | 2;

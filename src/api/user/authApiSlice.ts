@@ -2,6 +2,11 @@ import { api } from '../api';
 import { User } from '../../types/User.ts';
 import { AuthResponse } from '../../types/AuthResponse.ts';
 import { RegisterUser } from '../../pages/singUp/SingUp.tsx';
+
+type UpdateUserValues = {
+    id: string;
+    credentials: User;
+};
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<
@@ -34,16 +39,25 @@ export const authApi = api.injectEndpoints({
             }),
             providesTags: ['User'],
         }),
-        getUser: builder.query({
+        getUser: builder.query<User, string>({
             query: (id) => ({
                 url: `/users/${id}`,
                 method: 'GET',
             }),
+            providesTags: ['User'],
+        }),
+        updateUser: builder.mutation<User, UpdateUserValues>({
+            query: ({ id, credentials }: UpdateUserValues) => ({
+                url: `/users/${id}`,
+                method: 'PUT',
+                data: credentials,
+            }),
+            invalidatesTags: ['User'],
         }),
         refresh: builder.query<AuthResponse, void>({
             query: (credentials) => ({
                 url: '/users/refreshtoken',
-                method: 'get',
+                method: 'GET',
                 data: credentials,
             }),
         }),
@@ -57,4 +71,5 @@ export const {
     useRefreshQuery,
     useGetAllUsersQuery,
     useGetUserQuery,
+    useUpdateUserMutation,
 } = authApi;

@@ -2,11 +2,16 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import ProductsListItem from '../productsListItem/ProductsListItem.tsx';
 import { Product } from '../../types/product.ts';
-import { useGetProductsQuery } from '../../api/product/productApiSlice.ts';
+import { useGetMyProductsQuery } from '../../api/product/productApiSlice.ts';
+import { useSelector } from 'react-redux';
+import { selectId } from '../../api/user/userSlice.ts';
 
 const ProductsList = () => {
-    const { data } = useGetProductsQuery();
-    const products = data?.items;
+    const { data } = useGetMyProductsQuery();
+    const id = useSelector(selectId);
+    const products = data?.items.filter((elem) => elem.userId === id);
+    console.log(products, id);
+
     return (
         <>
             <Typography component="h1" variant="h2" sx={{ mb: 2 }}>

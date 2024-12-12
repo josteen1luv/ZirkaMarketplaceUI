@@ -6,6 +6,7 @@ export type Product = {
     price: number;
     photoUrl: string;
     availableAmount: number;
+    userId: string;
 };
 
 export interface ProductForm {

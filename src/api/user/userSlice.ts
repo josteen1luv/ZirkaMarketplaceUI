@@ -21,7 +21,7 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.login.matchFulfilled,
                 (state, action) => {
-                    state.id = action.payload.id;
+                    state.id = action.payload.userId;
                     if (action.payload.role === 'Buyer') {
                         state.role = 2;
                     } else if (action.payload.role === 'Seller') {
@@ -50,7 +50,7 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.refresh.matchFulfilled,
                 (state, action) => {
-                    state.id = action.payload.id;
+                    state.id = action.payload.userId;
                     state.isAuth = true;
                     if (action.payload.role === 'Buyer') {
                         state.role = 2;
