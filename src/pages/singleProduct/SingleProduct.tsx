@@ -1,17 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import {
-    Box,
-    CardMedia,
-    Typography,
-    Rating,
-    Button,
-    Container,
-} from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 import { useGetSingleProductQuery } from '../../api/product/productApiSlice.ts';
 import { Product } from '../../types/product.ts';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import SingleProductItem from '../../features/singleProductItem/SingleProductItem.tsx';
+import SingleProductItem from './SingleProductItem.tsx';
 
 const SingleProductPage = () => {
     const { id } = useParams<{ id: string }>();

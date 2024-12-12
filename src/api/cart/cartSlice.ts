@@ -26,13 +26,20 @@ const cartSlice = createSlice({
         addProduct: (state, action) => {
             state.purchaseItemDtos.push(action.payload);
         },
-        buyProducts: (state) => {
+        changeQuantity: (state, action) => {
+            state.purchaseItemDtos = state.purchaseItemDtos.map((item) =>
+                item.productId === action.payload.productId
+                    ? { ...item, quantity: action.payload.quantity }
+                    : item,
+            );
+        },
+        clearProducts: (state) => {
             state.purchaseItemDtos = [];
         },
     },
 });
 
-export const { addProduct, buyProducts } = cartSlice.actions;
+export const { addProduct, clearProducts, changeQuantity } = cartSlice.actions;
 
 export const selectPaymentInfo = (state: RootState) => state.cart;
 

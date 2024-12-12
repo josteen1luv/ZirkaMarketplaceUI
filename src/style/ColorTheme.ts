@@ -1,14 +1,18 @@
 import { createTheme } from '@mui/material';
 import { ThemeMode } from '../api/theme/themeSlice.ts';
-import { BreakpointOverrides } from '@mui/material/styles';
 declare module '@mui/material/styles' {
     interface BreakpointOverrides {
-        xs: true; // removes the `xs` breakpoint
+        xs: true;
         sm: true;
         md: true;
         lg: true;
         xl: true;
         custom575: true;
+    }
+}
+declare module '@mui/material/Button' {
+    interface ButtonPropsColorOverrides {
+        customColor: true;
     }
 }
 export const createCustomTheme = (mode: ThemeMode) => {
@@ -29,6 +33,10 @@ export const createCustomTheme = (mode: ThemeMode) => {
                     primary: '#000000',
                     secondary: '#222222',
                 },
+                customColor: {
+                    main: '#ececec',
+                    textContrast: '#000000',
+                },
             },
         },
         dark: {
@@ -40,6 +48,7 @@ export const createCustomTheme = (mode: ThemeMode) => {
                 },
                 secondary: {
                     main: '#533859',
+                    textContrast: '#ffffff',
                 },
                 background: {
                     default: '#121212',
@@ -49,6 +58,10 @@ export const createCustomTheme = (mode: ThemeMode) => {
                 text: {
                     primary: '#ffffff',
                     secondary: '#d8d8d8',
+                },
+                customColor: {
+                    main: '#808080',
+                    textContrast: '#ffffff',
                 },
             },
         },

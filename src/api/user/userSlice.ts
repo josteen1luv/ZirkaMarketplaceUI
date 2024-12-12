@@ -31,13 +31,6 @@ const userSlice = createSlice({
                     }
 
                     state.isAuth = true;
-                    localStorage.setItem('token', action.payload.accessToken);
-                },
-            )
-            .addMatcher(
-                authApi.endpoints.registration.matchFulfilled,
-                (state, action) => {
-                    // state.id = action.payload.id;
                     // localStorage.setItem('token', action.payload.accessToken);
                 },
             )
@@ -45,7 +38,7 @@ const userSlice = createSlice({
                 state.id = null;
                 state.role = null;
                 state.isAuth = false;
-                localStorage.removeItem('token');
+                // localStorage.removeItem('token');
             })
             .addMatcher(
                 authApi.endpoints.refresh.matchFulfilled,

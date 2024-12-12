@@ -55,11 +55,13 @@ export const authApi = api.injectEndpoints({
             invalidatesTags: ['User'],
         }),
         refresh: builder.query<AuthResponse, void>({
-            query: (credentials) => ({
-                url: '/users/refreshtoken',
-                method: 'GET',
-                data: credentials,
-            }),
+            query: () => {
+                return {
+                    url: '/users/RefreshToken',
+                    method: 'POST',
+                    credentials: 'include',
+                };
+            },
         }),
     }),
 });
