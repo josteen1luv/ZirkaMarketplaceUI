@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import MainCarousel from '../../features/mainCarousel/mainCarousel.tsx';
+import MainCarousel from './MainCarousel.tsx';
 import {
     useGetBestSellersQuery,
     useGetNewProductsQuery,

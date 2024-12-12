@@ -151,7 +151,7 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                             sx={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
-                                gap: 1,
+                                gap: 2,
                                 padding: 2,
                             }}
                         >
@@ -164,11 +164,11 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                                         key={category.id}
                                     >
                                         <Button
-                                            variant="outlined"
+                                            variant="contained"
+                                            color="customColor"
                                             sx={{
-                                                padding: 1,
-                                                color: 'white',
-                                                border: '1px solid white',
+                                                padding: 1.5,
+                                                borderRadius: 2,
                                             }}
                                             key={category.id}
                                             onClick={handleClose}
@@ -192,11 +192,13 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                         />
                     </Search>
                     <Box sx={{ width: 100 }} />
-                    <Link to={'/products'}>
-                        <IconButton aria-label="cart" size="large">
-                            <ShoppingCartIcon fontSize="inherit" />
-                        </IconButton>
-                    </Link>
+                    {role === 2 ? (
+                        <Link to={'/cart'}>
+                            <IconButton aria-label="cart" size="large">
+                                <ShoppingCartIcon fontSize="inherit" />
+                            </IconButton>
+                        </Link>
+                    ) : null}
                     <Link to={role ? '/dashboard' : '/login'}>
                         <IconButton aria-label="profile" size="large">
                             <PersonIcon fontSize="inherit" />

@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import MainPage from './pages/mainPage/MainPage.tsx';
 import Header from './features/header/Header.tsx';
-import DashBoardProducts from './pages/dashBoard/DashBoardProducts.tsx';
 import SingleProduct from './pages/singleProduct/SingleProduct.tsx';
 import PaymentForm from './features/paymentForm/PaymentForm.tsx';
 import SignIn from './pages/singIn/SingIn.tsx';
@@ -56,10 +55,6 @@ function App() {
                         <Routes>
                             <Route path={'/'} element={<MainPage />} />
                             <Route path={'/cart'} element={<Cart />} />
-                            <Route
-                                path={'/products'}
-                                element={<DashBoardProducts />}
-                            />
                             <Route
                                 path={'/products/:id'}
                                 element={<SingleProduct />}

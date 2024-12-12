@@ -1,6 +1,6 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import ProductsListItem from '../productsListItem/ProductsListItem';
+import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';
 import { Product } from '../../types/product.ts';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -93,7 +93,9 @@ const MainCarousel = ({ title, func }: Props) => {
                         width: `${(totalProducts / maxVisible) * 71.2}%`,
                     }}
                 >
-                    {products &&
+                    {!products ? (
+                        <CircularProgress />
+                    ) : (
                         products.map((product) => (
                             <Box
                                 key={product.id}
@@ -105,7 +107,8 @@ const MainCarousel = ({ title, func }: Props) => {
                             >
                                 <ProductsListItem product={product} />
                             </Box>
-                        ))}
+                        ))
+                    )}
                 </Box>
 
                 {totalProducts > maxVisible && (
