@@ -14,8 +14,10 @@ const Dashboard = () => {
     const [activeView, setActiveView] = useState<
         'home' | 'profile' | 'settings' | 'products'
     >('home');
-    const id = useSelector(selectId);
-    const { data } = useGetUserQuery(id as string);
+    const id = useSelector(selectId) as string;
+    const { data } = useGetUserQuery(id, {
+        skip: !id,
+    });
     const userInfo: User | undefined = data;
 
     const initial: User = {

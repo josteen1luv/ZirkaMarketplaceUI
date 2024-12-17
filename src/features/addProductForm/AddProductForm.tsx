@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
     Box,
@@ -10,13 +10,16 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    CircularProgress,
 } from '@mui/material';
 import { ProductForm } from '../../types/product.ts';
 import { usePostProductMutation } from '../../api/product/productApiSlice.ts';
 import { useSelector } from 'react-redux';
 import { selectId } from '../../api/user/userSlice.ts';
+import { useGetCategoriesQuery } from '../../api/category/categoryApiSlice.ts';
 const AddProductForm = () => {
     const id = useSelector(selectId);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { handleSubmit, control } = useForm<ProductForm>({
         defaultValues: {
             Name: '',
@@ -30,30 +33,18 @@ const AddProductForm = () => {
     });
 
     const [postProduct] = usePostProductMutation();
-    const fileInput = document.querySelector(
-        'input[type="file"]',
-    ) as HTMLInputElement;
+    const categories = useGetCategoriesQuery().data;
     const onSubmit = async (otherFields: Omit<ProductForm, 'PhotoUrl'>) => {
-        const file = fileInput.files?.[0];
+        const file = fileInputRef.current?.files?.[0];
         if (!file) {
             console.error('No file selected');
             return;
         }
 
         try {
-            const toBase64 = (file: File): Promise<string> =>
-                new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => resolve(reader.result as string);
-                    reader.onerror = (error) => reject(error);
-                });
-
-            const base64String = await toBase64(file);
-
             const productData: ProductForm = {
                 ...otherFields,
-                PhotoUrl: base64String, // Assign Base64 string here
+                PhotoUrl: file, // Assign Base64 string here
             };
 
             console.log(productData);
@@ -170,13 +161,18 @@ const AddProductForm = () => {
                                     height: '33px',
                                 }}
                             >
-                                <MenuItem
-                                    value={
-                                        '5f6bf0d9-954e-4670-a5d0-d53419af16f5'
-                                    }
-                                >
-                                    Komputery
-                                </MenuItem>
+                                {!categories ? (
+                                    <CircularProgress />
+                                ) : (
+                                    categories.map((category) => (
+                                        <MenuItem
+                                            key={category.id}
+                                            value={category.id}
+                                        >
+                                            {category.name}
+                                        </MenuItem>
+                                    ))
+                                )}
                             </Select>
                         </FormControl>
                     )}
@@ -219,6 +215,7 @@ const AddProductForm = () => {
                             type={'file'}
                             color={'secondary'}
                             {...field}
+                            inputRef={fileInputRef}
                             label="Zdjęcie"
                             fullWidth
                             margin="normal"
@@ -230,8 +227,6 @@ const AddProductForm = () => {
                                 },
                             }}
                         />
-                        //     <input type={'file'} {...field} error={!!fieldState.error}
-                        // helperText={fieldState.error?.message}/>
                     )}
                 />
                 <Controller

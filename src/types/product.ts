@@ -14,7 +14,7 @@ export interface ProductForm {
     Description: string;
     CategoryId: string;
     Price: number;
-    PhotoUrl: string; // Now a Base64 string
+    PhotoUrl: Blob | string;
     AvailableAmount: number;
     UserId: string;
 }

@@ -29,7 +29,7 @@ const ProductsList = () => {
             >
                 {products &&
                     products.map((item: Product) => (
-                        <ProductsListItem product={item} />
+                        <ProductsListItem key={item.id} product={item} />
                     ))}
             </Box>
         </>
