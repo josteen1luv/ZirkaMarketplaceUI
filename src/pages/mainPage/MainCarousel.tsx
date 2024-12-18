@@ -1,142 +1,122 @@
-import { Typography, Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';
-import { Product } from '../../types/Product.ts';
+import {
+    Typography,
+    Box,
+    CircularProgress,
+    IconButton,
+    useMediaQuery,
+} from '@mui/material';
+
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';
+import { Product } from '../../types/product.ts';
 
 type Props = {
     title: string;
     func: any;
 };
+
 const MainCarousel = ({ title, func }: Props) => {
     const { data } = func();
-    const products: Product[] | undefined = data;
+    const products: Product[] = data || [];
 
-    const maxVisible = 5;
-    const [visibleIndex, setVisibleIndex] = useState(0);
-    const totalProducts = products?.length || 5;
-    const totalGroups = Math.ceil(totalProducts / maxVisible);
+    const isCustom575 = useMediaQuery('(max-width:528px)');
+    const isSm = useMediaQuery('(max-width:800px)');
+    const isMd = useMediaQuery('(max-width:1122px)');
+    const isLg = useMediaQuery('(max-width:1400px)');
+
+    const maxVisible = isCustom575 ? 1 : isSm ? 2 : isMd ? 3 : isLg ? 4 : 5;
+
+    const [startIndex, setStartIndex] = useState(0);
 
     const handleNext = () => {
-        setVisibleIndex((prevIndex) => (prevIndex + 1) % totalGroups);
-    };
-
-    const handlePrev = () => {
-        setVisibleIndex(
-            (prevIndex) => (prevIndex - 1 + totalGroups) % totalGroups,
+        setStartIndex((prev) =>
+            prev + maxVisible < products.length ? prev + 1 : 0
         );
     };
 
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-        >
-            <Typography
-                variant={'h2'}
-                textAlign="center"
-                sx={{
-                    marginBottom: 1,
-                }}
-            >
-                {`${title}`}
-            </Typography>
-            <Box
-                sx={{
-                    padding: 1.2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    position: 'relative',
-                    color: '#fff',
-                    overflow: 'hidden',
-                    maxWidth: 1370,
-                    gap: 2,
-                }}
-            >
-                {visibleIndex > 0 && totalGroups > 1 && (
-                    <Box
-                        onClick={handlePrev}
-                        sx={{
-                            position: 'absolute',
-                            left: '15px',
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '50%',
-                            backgroundColor: 'rgba(82, 5, 123, 0.6)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            zIndex: 1,
-                        }}
-                    >
-                        <ArrowBackIosIcon
-                            style={{
-                                color: '#FFFFFF',
-                                opacity: 1,
-                                transform: 'translateX(4px)',
-                            }}
-                        />
-                    </Box>
-                )}
+    const handlePrev = () => {
+        setStartIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    };
 
+    const visibleProducts = products ? products.slice(startIndex, startIndex + maxVisible): [];
+
+    return (
+        <Box sx={{ height:480}}
+        >
+            <Typography variant="h2" mb={2} sx={{textAlign: 'center'}}>
+                {title}
+            </Typography>
+
+            {products.length === 0 ? (
+                <CircularProgress />
+            ) : (
                 <Box
                     sx={{
+                        position: 'relative',
+                        overflow: 'hidden',
                         display: 'flex',
-                        gap: 2,
-                        transition: 'transform 0.5s ease',
-                        transform: `translateX(-${visibleIndex * 71.2}%)`,
-                        width: `${(totalProducts / maxVisible) * 71.2}%`,
+                        height:415,
+                        justifyContent: 'center',
+                        alignItems: 'center',
                     }}
                 >
-                    {!products ? (
-                        <CircularProgress />
-                    ) : (
-                        products.map((product) => (
+                    {startIndex > 0 && (
+                        <IconButton
+                            onClick={handlePrev}
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: 0,
+                                transform: 'translateY(-50%)',
+                                zIndex: 2,
+                                backgroundColor: 'rgba(0,0,0,0.6)',
+                                color: 'white',
+                                '&:hover': { backgroundColor: 'rgba(0,0,0,0.8)' },
+                            }}
+                        >
+                            <ArrowBackIosIcon />
+                        </IconButton>
+                    )}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexWrap: 'nowrap',
+                            justifyContent: 'space-between',
+                            gap: 1,
+                            transition: 'transform 0.5s ease',
+                        }}
+                    >
+                        {visibleProducts.map((product) => (
                             <Box
                                 key={product.id}
-                                sx={{
-                                    width: `calc(100% / ${maxVisible})`,
-                                    padding: '0 4px',
+                                sx={{ 
                                     boxSizing: 'border-box',
+                                    
                                 }}
                             >
                                 <ProductsListItem product={product} />
                             </Box>
-                        ))
-                    )}
-                </Box>
-
-                {totalProducts > maxVisible && (
-                    <Box
+                        ))}
+                    </Box>
+                    <IconButton
                         onClick={handleNext}
                         sx={{
                             position: 'absolute',
-                            right: '15px',
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '50%',
-                            backgroundColor: 'rgba(82, 5, 123, 0.6)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            zIndex: 1,
+                            top: '50%',
+                            right: 0,
+                            transform: 'translateY(-50%)',
+                            zIndex: 2,
+                            backgroundColor: 'rgba(0,0,0,0.6)',
+                            color: 'white',
+                            '&:hover': { backgroundColor: 'rgba(0,0,0,0.8)' },
                         }}
                     >
-                        <ArrowForwardIosIcon
-                            style={{
-                                color: '#FFFFFF',
-                                opacity: 1,
-                            }}
-                        />
-                    </Box>
-                )}
-            </Box>
+                        <ArrowForwardIosIcon />
+                    </IconButton>
+                </Box>
+            )}
         </Box>
     );
 };
