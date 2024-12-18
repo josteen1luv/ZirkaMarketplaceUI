@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Grid2,
+    Paper,
+    TextField,
+    Typography,
+} from '@mui/material';
 import { User } from '../../types/User.ts';
 import { Controller, useForm } from 'react-hook-form';
 import { useUpdateUserMutation } from '../../api/user/authApiSlice.ts';
@@ -51,10 +58,10 @@ const DashBoardSettings = ({ user }: { user: User }) => {
     };
     return (
         <Box>
-            <Typography variant="h5" sx={{ marginBottom: '20px' }}>
+            <Typography variant="h4" sx={{ marginBottom: '20px' }}>
                 Edytuj Profil
             </Typography>
-            <Card
+            <Paper
                 sx={{
                     padding: '20px',
                     borderRadius: '12px',
@@ -63,125 +70,137 @@ const DashBoardSettings = ({ user }: { user: User }) => {
                 }}
             >
                 <Box component="form">
-                    <Box
+                    <Grid2
+                        container
+                        spacing={2}
+                        columns={{ xs: 1, md: 2 }}
                         sx={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
                             gap: '16px',
                         }}
                     >
-                        <Controller
-                            name="email"
-                            control={control}
-                            rules={{
-                                required: 'Email jest wymagany',
-                                pattern: {
-                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: 'Nieprawidłowy adres email',
-                                },
-                            }}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    color="secondary"
-                                    label="Email"
-                                    variant="outlined"
-                                    fullWidth
-                                    margin="normal"
-                                    error={!!errors.email}
-                                    helperText={
-                                        errors.email ? errors.email.message : ''
-                                    }
-                                    slotProps={{
-                                        inputLabel: {
-                                            shrink: true,
-                                        },
-                                        input: {
-                                            readOnly: !isEditing,
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="userName"
-                            control={control}
-                            rules={{
-                                required: 'Nazwa użytkownika jest wymagana',
-                            }}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    color="secondary"
-                                    label="Nazwa użytkownika"
-                                    variant="outlined"
-                                    fullWidth
-                                    margin="normal"
-                                    error={!!errors.userName}
-                                    helperText={errors.userName?.message}
-                                    slotProps={{
-                                        inputLabel: {
-                                            shrink: true,
-                                        },
-                                        input: {
-                                            readOnly: true,
-                                            disabled: true,
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="firstName"
-                            control={control}
-                            rules={{ required: 'Imię jest wymagane' }}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Imię"
-                                    fullWidth
-                                    color="secondary"
-                                    variant="outlined"
-                                    margin="normal"
-                                    error={!!errors.firstName}
-                                    helperText={errors.firstName?.message}
-                                    slotProps={{
-                                        inputLabel: {
-                                            shrink: true,
-                                        },
-                                        input: {
-                                            readOnly: !isEditing,
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="lastName"
-                            control={control}
-                            rules={{ required: 'Nazwisko jest wymagane' }}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Nazwisko"
-                                    fullWidth
-                                    color="secondary"
-                                    variant="outlined"
-                                    margin="normal"
-                                    error={!!errors.lastName}
-                                    helperText={errors.lastName?.message}
-                                    slotProps={{
-                                        inputLabel: {
-                                            shrink: true,
-                                        },
-                                        input: {
-                                            readOnly: !isEditing,
-                                        },
-                                    }}
-                                />
-                            )}
-                        />
-                    </Box>
+                        <Grid2 size={1}>
+                            <Controller
+                                name="email"
+                                control={control}
+                                rules={{
+                                    required: 'Email jest wymagany',
+                                    pattern: {
+                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                        message: 'Nieprawidłowy adres email',
+                                    },
+                                }}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        color="secondary"
+                                        label="Email"
+                                        variant="outlined"
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.email}
+                                        helperText={
+                                            errors.email
+                                                ? errors.email.message
+                                                : ''
+                                        }
+                                        slotProps={{
+                                            inputLabel: {
+                                                shrink: true,
+                                            },
+                                            input: {
+                                                readOnly: !isEditing,
+                                            },
+                                        }}
+                                    />
+                                )}
+                            />
+                        </Grid2>
+                        <Grid2 size={1}>
+                            <Controller
+                                name="userName"
+                                control={control}
+                                rules={{
+                                    required: 'Nazwa użytkownika jest wymagana',
+                                }}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        color="secondary"
+                                        label="Nazwa użytkownika"
+                                        variant="outlined"
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.userName}
+                                        helperText={errors.userName?.message}
+                                        slotProps={{
+                                            inputLabel: {
+                                                shrink: true,
+                                            },
+                                            input: {
+                                                readOnly: true,
+                                                disabled: true,
+                                            },
+                                        }}
+                                    />
+                                )}
+                            />
+                        </Grid2>
+
+                        <Grid2 size={1}>
+                            <Controller
+                                name="firstName"
+                                control={control}
+                                rules={{ required: 'Imię jest wymagane' }}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        label="Imię"
+                                        fullWidth
+                                        color="secondary"
+                                        variant="outlined"
+                                        margin="normal"
+                                        error={!!errors.firstName}
+                                        helperText={errors.firstName?.message}
+                                        slotProps={{
+                                            inputLabel: {
+                                                shrink: true,
+                                            },
+                                            input: {
+                                                readOnly: !isEditing,
+                                            },
+                                        }}
+                                    />
+                                )}
+                            />
+                        </Grid2>
+                        <Grid2 size={1}>
+                            <Controller
+                                name="lastName"
+                                control={control}
+                                rules={{ required: 'Nazwisko jest wymagane' }}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        label="Nazwisko"
+                                        fullWidth
+                                        color="secondary"
+                                        variant="outlined"
+                                        margin="normal"
+                                        error={!!errors.lastName}
+                                        helperText={errors.lastName?.message}
+                                        slotProps={{
+                                            inputLabel: {
+                                                shrink: true,
+                                            },
+                                            input: {
+                                                readOnly: !isEditing,
+                                            },
+                                        }}
+                                    />
+                                )}
+                            />
+                        </Grid2>
+                    </Grid2>
 
                     <Box
                         sx={{
@@ -227,7 +246,7 @@ const DashBoardSettings = ({ user }: { user: User }) => {
                         )}
                     </Box>
                 </Box>
-            </Card>
+            </Paper>
         </Box>
     );
 };

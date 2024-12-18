@@ -13,24 +13,32 @@ const ProductsList = () => {
 
     return (
         <>
-            <Typography variant="h5" sx={{ marginBottom: '20px' }}>
-                Twoje towary
-            </Typography>
             <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    gap: 3,
-                    alignItems: 'center',
-                    width: 800,
-                    borderRadius: 3,
-                }}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                flexDirection={'column'}
             >
-                {products &&
-                    products.map((item: Product) => (
-                        <ProductsListItem key={item.id} product={item} />
-                    ))}
+                <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+                    Twoje towary
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        gap: 2,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        borderRadius: 3,
+                    }}
+                >
+                    {products &&
+                        products.map((item: Product) => (
+                            <ProductsListItem key={item.id} product={item} />
+                        ))}
+                </Box>
             </Box>
         </>
     );

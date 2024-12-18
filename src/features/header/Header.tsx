@@ -166,7 +166,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                     </Dialog>
                     <Search isDarkMode={isDarkMode} />
                     <Box sx={{ width: { md: 0, lg: 100 } }} />
-                    {!role ? (
+                    {role === undefined ? (
                         <CircularProgress />
                     ) : (
                         <Box
@@ -204,7 +204,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem sx={{ padding: 0 }}>
+                        <MenuItem sx={{ padding: 0 }} onClick={handleCloseNav}>
                             <IconButton
                                 onClick={handleClickOpen}
                                 sx={{
@@ -217,8 +217,11 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                                 />
                             </IconButton>
                         </MenuItem>
-                        <MenuItem sx={{ padding: 0 }}>
-                            {role === 2 ? (
+                        {role === 2 ? (
+                            <MenuItem
+                                sx={{ padding: 0 }}
+                                onClick={handleCloseNav}
+                            >
                                 <Link to={'/cartPage'}>
                                     <IconButton aria-label="cart" size="large">
                                         <ShoppingCartIcon
@@ -231,9 +234,9 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                                         />
                                     </IconButton>
                                 </Link>
-                            ) : null}
-                        </MenuItem>
-                        <MenuItem sx={{ padding: 0 }}>
+                            </MenuItem>
+                        ) : null}
+                        <MenuItem sx={{ padding: 0 }} onClick={handleCloseNav}>
                             <Link to={role ? '/dashboard' : '/login'}>
                                 <IconButton aria-label="profile" size="large">
                                     <PersonIcon
@@ -245,7 +248,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                                 </IconButton>
                             </Link>
                         </MenuItem>
-                        <MenuItem sx={{ padding: 0 }}>
+                        <MenuItem sx={{ padding: 0 }} onClick={handleCloseNav}>
                             <IconButton onClick={onThemeToggle} size="large">
                                 {isDarkMode ? (
                                     <Tooltip title="Dark Mode">

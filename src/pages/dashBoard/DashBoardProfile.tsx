@@ -1,14 +1,18 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { User } from '../../types/User.ts';
+import Grid2 from '@mui/material/Grid2';
+import { User } from '../../types/User';
 
 const DashBoardProfile = ({ user }: { user: User }) => {
     return (
         <Box>
-            <Typography variant="h5" sx={{ marginBottom: '20px' }}>
-                Informacje o użytkowniku
+            <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+                Moje dane
             </Typography>
-            <Box
+            <Grid2
+                container
+                spacing={{ xs: 0, md: 2 }}
+                columns={{ xs: 6, md: 12 }}
                 sx={{
                     border: '1px solid',
                     borderColor: 'divider',
@@ -18,123 +22,101 @@ const DashBoardProfile = ({ user }: { user: User }) => {
                     backgroundColor: 'primary.main',
                 }}
             >
-                <Box
-                    component="table"
-                    sx={{
-                        width: '100%',
-                        borderCollapse: 'collapse',
-                    }}
-                >
-                    <Box component="tbody">
-                        <Box
-                            component="tr"
-                            sx={{
-                                borderBottom: '1px solid',
-                                borderColor: 'divider',
-                            }}
-                        >
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    fontWeight: 'bold',
-                                    color: 'text.primary',
-                                }}
-                            >
-                                Imię Nazwisko
-                            </Box>
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    color: 'text.secondary',
-                                }}
-                            >
-                                {user.firstName + ' ' + user.lastName}
-                            </Box>
-                        </Box>
-                        <Box
-                            component="tr"
-                            sx={{
-                                borderBottom: '1px solid',
-                                borderColor: 'divider',
-                            }}
-                        >
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    fontWeight: 'bold',
-                                    color: 'text.primary',
-                                }}
-                            >
-                                Email
-                            </Box>
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    color: 'text.secondary',
-                                }}
-                            >
-                                {user.email}
-                            </Box>
-                        </Box>
-                        <Box
-                            component="tr"
-                            sx={{
-                                borderBottom: '1px solid',
-                                borderColor: 'divider',
-                            }}
-                        >
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    fontWeight: 'bold',
-                                    color: 'text.primary',
-                                }}
-                            >
-                                Nazwa użytkownika
-                            </Box>
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    color: 'text.secondary',
-                                }}
-                            >
-                                {user.userName}
-                            </Box>
-                        </Box>
-                        <Box component="tr">
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    fontWeight: 'bold',
-                                    color: 'text.primary',
-                                }}
-                            >
-                                Rola
-                            </Box>
-                            <Box
-                                component="td"
-                                sx={{
-                                    padding: '8px',
-                                    color: 'text.secondary',
-                                }}
-                            >
-                                {user.role === 2
-                                    ? 'Kupujący'
-                                    : user.role === 1
-                                      ? 'Sprzedawca'
-                                      : 'Admin'}
-                            </Box>
-                        </Box>
-                    </Box>
-                </Box>
-            </Box>
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            padding: '8px',
+                            fontWeight: 'bold',
+                            color: 'text.primary',
+                        }}
+                    >
+                        Imię Nazwisko:
+                    </Typography>
+                </Grid2>
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            mb: { xs: 3, sm: 0 },
+                            padding: '8px',
+                            color: 'text.secondary',
+                        }}
+                    >
+                        {user.firstName + ' ' + user.lastName}
+                    </Typography>
+                </Grid2>
+
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            padding: '8px',
+                            fontWeight: 'bold',
+                            color: 'text.primary',
+                        }}
+                    >
+                        Email:
+                    </Typography>
+                </Grid2>
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            mb: { xs: 3, sm: 0 },
+                            padding: '8px',
+                            color: 'text.secondary',
+                        }}
+                    >
+                        {user.email}
+                    </Typography>
+                </Grid2>
+
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            padding: '8px',
+                            fontWeight: 'bold',
+                            color: 'text.primary',
+                        }}
+                    >
+                        Nazwa użytkownika:
+                    </Typography>
+                </Grid2>
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            mb: { xs: 3, sm: 0 },
+                            padding: '8px',
+                            color: 'text.secondary',
+                        }}
+                    >
+                        {user.userName}
+                    </Typography>
+                </Grid2>
+
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            padding: '8px',
+                            fontWeight: 'bold',
+                            color: 'text.primary',
+                        }}
+                    >
+                        Rola:
+                    </Typography>
+                </Grid2>
+                <Grid2 size={6}>
+                    <Typography
+                        sx={{
+                            padding: '8px',
+                            color: 'text.secondary',
+                        }}
+                    >
+                        {user.role === 2
+                            ? 'Kupujący'
+                            : user.role === 1
+                              ? 'Sprzedawca'
+                              : 'Admin'}
+                    </Typography>
+                </Grid2>
+            </Grid2>
         </Box>
     );
 };

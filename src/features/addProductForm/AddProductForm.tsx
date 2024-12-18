@@ -72,7 +72,6 @@ const AddProductForm = () => {
         <Card
             elevation={4}
             sx={{
-                mt: 10.5,
                 width: 300,
                 minHeight: 400,
                 backgroundColor: 'primary.main',

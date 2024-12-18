@@ -39,12 +39,21 @@ const Dashboard = () => {
     }, [userInfo]);
 
     return (
-        <Box sx={{ display: 'flex', height: 'flex', margin: '80px' }}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column-reverse', sm: 'row' },
+                alignItems: { xs: 'center', sm: 'flex-start' },
+                minHeight: '100vh',
+                height: 'auto',
+                pt: { xs: 9, sm: 10 },
+            }}
+        >
             <DashBoardMenu
                 activeView={activeView}
                 setActiveView={setActiveView}
             />
-            <Box sx={{ flex: 1, padding: '20px' }}>
+            <Box sx={{ flex: 1, m: 2, mb: { xs: 14, sm: 2 } }}>
                 {activeView === 'home' && <DashBoardHome user={user} />}
                 {activeView === 'profile' && <DashBoardProfile user={user} />}
                 {activeView === 'settings' && <DashBoardSettings user={user} />}
