@@ -1,5 +1,4 @@
 import {
-    alpha,
     AppBar,
     Avatar,
     Box,
@@ -9,32 +8,44 @@ import {
     Container,
     Dialog,
     IconButton,
-    InputBase,
-    styled,
+    Menu,
+    MenuItem,
     Toolbar,
     Tooltip,
     Typography,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PersonIcon from '@mui/icons-material/Person';
+
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-
-import Brightness4Icon from '@mui/icons-material/Brightness4'; // Moon icon
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { selectRole } from '../../api/user/userSlice.ts';
 import { useSelector } from 'react-redux';
 import { useGetCategoriesQuery } from '../../api/category/categoryApiSlice.ts';
-import { Category } from '../../types/Category.ts'; // Sun icon
-
-type OnThemeToggle = (event: React.MouseEvent<HTMLElement>) => void;
-interface Props {
+import { Category } from '../../types/Category.ts';
+import Search from '../search/Search.tsx';
+import HeaderNav from './HeaderNav.tsx';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import AppsIcon from '@mui/icons-material/Apps';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonIcon from '@mui/icons-material/Person';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+export type OnThemeToggle = (event: React.MouseEvent<HTMLElement>) => void;
+export type HeaderProps = {
     onThemeToggle: OnThemeToggle;
     isDarkMode: boolean;
-}
+};
 
-const Header = ({ onThemeToggle, isDarkMode }: Props) => {
+const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const openNav = Boolean(anchorEl);
+    const handleClickNav = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseNav = () => {
+        setAnchorEl(null);
+    };
+
     const role: 0 | 1 | 2 | null = useSelector(selectRole);
 
     const [open, setOpen] = useState(false);
@@ -49,48 +60,17 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
     const { data } = useGetCategoriesQuery();
     const categories: Category[] | undefined = data;
 
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        border: `1px solid ${alpha(theme.palette.common.black, 0.2)}`,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        width: '100%',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(2, 1, 2, 0),
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            [theme.breakpoints.up('sm')]: {
-                width: '12ch',
-                '&:focus': {
-                    width: '20ch',
-                },
-            },
-        },
-    }));
     return (
         <AppBar>
-            <Container maxWidth="xl">
+            <Container
+                maxWidth="xl"
+                sx={{
+                    px: {
+                        xs: 0,
+                        sm: 2,
+                    },
+                }}
+            >
                 <Toolbar
                     disableGutters
                     sx={{
@@ -115,7 +95,11 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                             <Typography
                                 variant="h6"
                                 sx={{
-                                    display: { md: 'block', xs: 'none' },
+                                    display: {
+                                        xs: 'none',
+                                        md: 'none',
+                                        lg: 'block',
+                                    },
                                     mr: 2,
                                     fontWeight: 700,
                                     letterSpacing: '.2rem',
@@ -131,13 +115,11 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                     </Link>
                     <Button
                         onClick={handleClickOpen}
-                        aria-controls="categories-menu"
-                        aria-haspopup="true"
                         variant="contained"
                         color="secondary"
                         sx={{
                             borderRadius: 4,
-                            color: '#FFFFFF',
+                            display: { xs: 'none', sm: 'block' },
                         }}
                     >
                         Kategorie
@@ -182,53 +164,105 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                             )}
                         </Box>
                     </Dialog>
-                    <Search sx={{ flexGrow: 1 }}>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ width: 100 }} />
-                    {role === 2 ? (
-                        <Link to={'/cartPage'}>
-                            <IconButton aria-label="cart" size="large">
-                                {isDarkMode ? (
-                                    <ShoppingCartIcon
-                                        fontSize="inherit"
-                                        sx={{ color: 'white' }}
-                                    />
-                                ) : (
-                                    <ShoppingCartIcon fontSize="inherit" />
-                                )}
-                            </IconButton>
-                        </Link>
-                    ) : null}
-                    <Link to={role ? '/dashboard' : '/login'}>
-                        <IconButton aria-label="profile" size="large">
-                            {isDarkMode ? (
-                                <PersonIcon
-                                    fontSize="inherit"
-                                    sx={{ color: 'white' }}
-                                />
-                            ) : (
-                                <PersonIcon fontSize="inherit" />
-                            )}
-                        </IconButton>
-                    </Link>
-                    <IconButton onClick={onThemeToggle} size="large">
-                        {isDarkMode ? (
-                            <Tooltip title="Dark Mode">
-                                <Brightness4Icon sx={{ color: 'white' }} />
-                            </Tooltip>
+                    <Search isDarkMode={isDarkMode} />
+                    <Box sx={{ width: { md: 0, lg: 100 } }} />
+                    {!role ? (
+                        <CircularProgress />
+                    ) : (
+                        <Box
+                            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+                        >
+                            <HeaderNav
+                                isDarkMode={isDarkMode}
+                                role={role}
+                                onThemeToggle={onThemeToggle}
+                            />
+                        </Box>
+                    )}
+                    <IconButton
+                        onClick={handleClickNav}
+                        sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
+                    >
+                        {!openNav ? (
+                            <ExpandMoreIcon
+                                fontSize={'large'}
+                                sx={{ color: isDarkMode ? 'white' : null }}
+                            />
                         ) : (
-                            <Tooltip title="Light Mode">
-                                <Brightness7Icon sx={{ color: 'orange' }} />
-                            </Tooltip>
+                            <ExpandLessIcon
+                                fontSize={'large'}
+                                sx={{ color: isDarkMode ? 'white' : null }}
+                            />
                         )}
                     </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={openNav}
+                        onClose={handleCloseNav}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem sx={{ padding: 0 }}>
+                            <IconButton
+                                onClick={handleClickOpen}
+                                sx={{
+                                    display: { xs: 'inline-flex', sm: 'none' },
+                                }}
+                            >
+                                <AppsIcon
+                                    fontSize={'large'}
+                                    sx={{ color: isDarkMode ? 'white' : null }}
+                                />
+                            </IconButton>
+                        </MenuItem>
+                        <MenuItem sx={{ padding: 0 }}>
+                            {role === 2 ? (
+                                <Link to={'/cartPage'}>
+                                    <IconButton aria-label="cart" size="large">
+                                        <ShoppingCartIcon
+                                            fontSize="inherit"
+                                            sx={{
+                                                color: isDarkMode
+                                                    ? 'white'
+                                                    : null,
+                                            }}
+                                        />
+                                    </IconButton>
+                                </Link>
+                            ) : null}
+                        </MenuItem>
+                        <MenuItem sx={{ padding: 0 }}>
+                            <Link to={role ? '/dashboard' : '/login'}>
+                                <IconButton aria-label="profile" size="large">
+                                    <PersonIcon
+                                        fontSize="inherit"
+                                        sx={{
+                                            color: isDarkMode ? 'white' : null,
+                                        }}
+                                    />
+                                </IconButton>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem sx={{ padding: 0 }}>
+                            <IconButton onClick={onThemeToggle} size="large">
+                                {isDarkMode ? (
+                                    <Tooltip title="Dark Mode">
+                                        <Brightness4Icon
+                                            sx={{ color: 'white' }}
+                                        />
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip title="Light Mode">
+                                        <Brightness7Icon
+                                            sx={{ color: 'orange' }}
+                                        />
+                                    </Tooltip>
+                                )}
+                            </IconButton>
+                        </MenuItem>
+                    </Menu>
                 </Toolbar>
             </Container>
         </AppBar>

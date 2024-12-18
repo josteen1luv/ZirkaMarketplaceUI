@@ -47,7 +47,10 @@ const SingleProductItem = ({ product }: { product: Product }) => {
     };
 
     const handleSubmitRating = () => {
-        rate({ productId: product.id, rating: ratingValue as number });
+        rate({
+            productId: product.id,
+            rating: ratingValue as number,
+        });
         handleCloseRatingDialog();
     };
 
