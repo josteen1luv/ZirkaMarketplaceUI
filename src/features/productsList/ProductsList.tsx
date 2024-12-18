@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import ProductsListItem from '../productsListItem/ProductsListItem.tsx';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import { useGetMyProductsQuery } from '../../api/product/productApiSlice.ts';
 import { useSelector } from 'react-redux';
 import { selectId } from '../../api/user/userSlice.ts';

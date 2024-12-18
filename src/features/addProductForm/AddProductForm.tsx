@@ -12,7 +12,7 @@ import {
     Select,
     CircularProgress,
 } from '@mui/material';
-import { ProductForm } from '../../types/product.ts';
+import { ProductForm } from '../../types/Product.ts';
 import { usePostProductMutation } from '../../api/product/productApiSlice.ts';
 import { useSelector } from 'react-redux';
 import { selectId } from '../../api/user/userSlice.ts';

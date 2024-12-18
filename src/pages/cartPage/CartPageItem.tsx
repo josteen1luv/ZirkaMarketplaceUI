@@ -3,7 +3,7 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { useGetSingleProductQuery } from '../../api/product/productApiSlice.ts';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import SingleProductItemInfo from '../singleProduct/SingleProductItemInfo.tsx';
 import { useDispatch } from 'react-redux';
 import { changeQuantity } from '../../api/cart/cartSlice.ts';
@@ -38,7 +38,7 @@ const CartPageItem = ({ id, quantity }: { id: string; quantity: number }) => {
                 price: product?.price || 0,
             }),
         );
-    }, [dispatch, id, quantityState]);
+    }, [dispatch, id, quantityState, product?.price]);
     if (!product) {
         return <CircularProgress />;
     }

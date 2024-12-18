@@ -6,6 +6,7 @@ import {
     IconButton,
     useMediaQuery,
 } from '@mui/material';
+
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';

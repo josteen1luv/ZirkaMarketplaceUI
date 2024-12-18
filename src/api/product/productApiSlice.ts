@@ -1,11 +1,13 @@
 import { api } from '../api';
-import { Product, ProductForm } from '../../types/product.ts';
-
+import { Product, RateProduct } from '../../types/Product.ts';
+type SearchQuery = {
+    name?: string;
+};
 export const productApiSlice = api.injectEndpoints({
     endpoints: (builder) => ({
-        getProducts: builder.query<{ items: Product[] }, void>({
-            query: () => ({
-                url: '/products',
+        getProducts: builder.query<{ items: Product[] }, SearchQuery>({
+            query: (query) => ({
+                url: `/products?Name=${query.name}`,
                 method: 'get',
             }),
             providesTags: ['Product'],
@@ -50,6 +52,18 @@ export const productApiSlice = api.injectEndpoints({
             }),
             invalidatesTags: ['Product'],
         }),
+        rateProduct: builder.mutation<void, RateProduct>({
+            query: (params) => {
+                const createParams = new URLSearchParams();
+                createParams.append('productId', params.productId);
+                createParams.append('rating', params.rating.toString());
+                return {
+                    url: `/products?${createParams.toString()}`,
+                    method: 'patch',
+                };
+            },
+            invalidatesTags: ['Product'],
+        }),
     }),
 });
 
@@ -60,4 +74,5 @@ export const {
     usePostProductMutation,
     useGetBestSellersQuery,
     useGetNewProductsQuery,
+    useRateProductMutation,
 } = productApiSlice;

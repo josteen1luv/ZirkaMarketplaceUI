@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import { Box, Card, CardMedia, Rating, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -7,8 +7,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 const ProductsListItem = ({ product }: { product: Product }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-    const { id, name, description, rating, price, photoUrl, availableAmount } =
-        product;
+    const { id, name, rating, price, photoUrl, availableAmount } = product;
 
     return (
         <Link to={`/products/${id}`}>
@@ -25,13 +24,11 @@ const ProductsListItem = ({ product }: { product: Product }) => {
                     // border: 1,
                     gap: 1,
                     width: 250,
-                    // Faster transition for smoother effect
                     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                    // Scale and shadow change on hover
                     transform: isHovered ? 'scale(1.1)' : 'scale(1)',
                     boxShadow: isHovered
-                        ? '0 15px 25px rgba(0, 0, 0, 0.3)' // Deeper shadow on hover
-                        : '0 4px 10px rgba(0, 0, 0, 0.1)', // Normal shadow
+                        ? '0 15px 25px rgba(0, 0, 0, 0.3)'
+                        : '0 4px 10px rgba(0, 0, 0, 0.1)',
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
