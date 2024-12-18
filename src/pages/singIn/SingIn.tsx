@@ -130,7 +130,7 @@ const SingIn = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: 3,
-                                width: '50%',
+                                width: '100%',
                                 justifyContent: 'center',
                             }}
                         >
@@ -181,39 +181,7 @@ const SingIn = () => {
                                 )}
                             />
                         </Box>
-                        <Divider
-                            orientation="vertical"
-                            flexItem
-                            sx={{
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                width: '1px',
-                            }}
-                        />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: 2,
-                                width: '50%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                sx={{
-                                    backgroundColor: '#444',
-                                    color: '#fff',
-                                    textTransform: 'none',
-                                    '&:hover': { backgroundColor: '#555' },
-                                }}
-                            >
-                                Zaloguj przez Google
-                            </Button>
-                        </Box>
                     </Box>
-
                     <Box sx={{ width: '100%', mt: 3 }}>
                         <Button
                             type="button"
