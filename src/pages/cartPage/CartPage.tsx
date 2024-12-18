@@ -16,7 +16,7 @@ const CartPage = () => {
                 pt: { xs: 9, sm: 10 },
                 display: 'flex',
                 flexDirection: 'column',
-                gap: { xs: 0, md: 2 },
+                gap: 2,
             }}
         >
             <Typography

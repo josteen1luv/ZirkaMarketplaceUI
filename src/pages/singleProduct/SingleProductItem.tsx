@@ -33,6 +33,7 @@ const SingleProductItem = ({ product }: { product: Product }) => {
         }
         if (cart.filter((elem) => elem.productId === product.id).length === 0) {
             dispatch(addProduct({ productId: product.id, quantity: 1 }));
+            alert('Produkt był dodany do koszyka');
         } else {
             alert('Ten produkt już jest w koszyku');
         }
@@ -61,7 +62,6 @@ const SingleProductItem = ({ product }: { product: Product }) => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: 2,
-                height: 400,
             }}
         >
             <SingleProductItemInfo product={product} />

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { useGetUserQuery } from '../../api/user/authApiSlice.ts';
 import { useSelector } from 'react-redux';
-import { selectId } from '../../api/user/userSlice.ts';
+import { selectId, selectIsAuth } from '../../api/user/userSlice.ts';
 import { Roles, User } from '../../types/User.ts';
 import DashBoardHome from './DashBoardHome.tsx';
 import DashBoardProfile from './DashBoardProfile.tsx';
 import DashBoardSettings from './DashBoardSettings.tsx';
 import DashBoardMenu from './DashBoardMenu.tsx';
 import DashBoardProducts from './DashBoardProducts.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const [activeView, setActiveView] = useState<
@@ -20,6 +21,9 @@ const Dashboard = () => {
     });
     const userInfo: User | undefined = data;
 
+    const isAuth = useSelector(selectIsAuth);
+
+    const navigate = useNavigate();
     const initial: User = {
         firstName: '',
         lastName: '',
@@ -37,7 +41,9 @@ const Dashboard = () => {
             setUser(newUserState);
         }
     }, [userInfo]);
-
+    if (!isAuth) {
+        navigate('/login');
+    }
     return (
         <Box
             sx={{

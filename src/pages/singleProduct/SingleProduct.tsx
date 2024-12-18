@@ -1,15 +1,29 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography, Container, CircularProgress } from '@mui/material';
 import { useGetSingleProductQuery } from '../../api/product/productApiSlice.ts';
 import { Product } from '../../types/Product.ts';
 import SingleProductItem from './SingleProductItem.tsx';
 
 const SingleProductPage = () => {
     const { id } = useParams<{ id: string }>();
-    const { data } = useGetSingleProductQuery(id as string);
+    const { isLoading, data } = useGetSingleProductQuery(id as string);
     const product: Product | undefined | null = data;
 
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
     if (!product) {
         return (
             <Box

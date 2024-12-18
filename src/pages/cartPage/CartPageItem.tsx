@@ -46,6 +46,8 @@ const CartPageItem = ({ id, quantity }: { id: string; quantity: number }) => {
         <Box
             sx={{
                 display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: 2,
                 width: '100%',
                 justifyContent: 'space-between',
                 alignItems: 'center',

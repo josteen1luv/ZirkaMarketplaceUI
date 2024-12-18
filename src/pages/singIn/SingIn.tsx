@@ -1,13 +1,6 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import {
-    Box,
-    Card,
-    Typography,
-    TextField,
-    Button,
-    Divider,
-} from '@mui/material';
+import { Box, Card, Typography, TextField, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/user/authApiSlice.ts';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
@@ -60,7 +53,7 @@ const SingIn = () => {
         if (symbolCount < minSymbols) {
             return `Hasło musi zawierać co najmniej ${minSymbols} symbol`;
         }
-    }
+    };
 
     const handleSubmitLogin = async (data: LoginForm) => {
         try {
@@ -95,7 +88,6 @@ const SingIn = () => {
                     elevation={4}
                     sx={{
                         width: 450,
-                        minHeight: 450,
                         backgroundColor: 'primary.main',
                         p: 3,
                         borderRadius: 3,

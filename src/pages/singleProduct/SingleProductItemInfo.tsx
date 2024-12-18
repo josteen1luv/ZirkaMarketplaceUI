@@ -8,6 +8,7 @@ const SingleProductItemInfo = ({ product }: { product: Product }) => {
         <Box
             sx={{
                 display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
                 gap: 2,
                 flexGrow: 1,
                 borderRadius: 3,
@@ -18,8 +19,8 @@ const SingleProductItemInfo = ({ product }: { product: Product }) => {
                 image={product.photoUrl || 'https://via.placeholder.com/200'}
                 alt={product.name}
                 sx={{
-                    width: { xs: 200, sm: 300 },
-                    height: { xs: 200, sm: 300 },
+                    width: { xs: 280, sm: 300 },
+                    height: { xs: 280, sm: 300 },
                     borderRadius: 2,
                     objectFit: 'contain',
                 }}

@@ -73,7 +73,7 @@ const SingUp = () => {
         if (symbolCount < minSymbols) {
             return `Hasło musi zawierać co najmniej ${minSymbols} symbol`;
         }
-    }
+    };
 
     const handleSubmitRegister = async (data: RegisterUser) => {
         try {
@@ -108,7 +108,6 @@ const SingUp = () => {
                 elevation={4}
                 sx={{
                     width: 600,
-                    minHeight: 500,
                     backgroundColor: 'primary.main',
                     p: 4,
                     borderRadius: 3,
@@ -271,9 +270,7 @@ const SingUp = () => {
                                             height: '33px',
                                         }}
                                     >
-                                        <MenuItem value={2}>
-                                            Użytkownik
-                                        </MenuItem>
+                                        <MenuItem value={2}>Kupujący</MenuItem>
                                         <MenuItem value={1}>
                                             Sprzedawca
                                         </MenuItem>
