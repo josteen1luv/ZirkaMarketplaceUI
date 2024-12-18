@@ -18,3 +18,4 @@ export interface ProductForm {
     AvailableAmount: number;
     UserId: string;
 }
+export type RateProduct = { productId: string; rating: number };

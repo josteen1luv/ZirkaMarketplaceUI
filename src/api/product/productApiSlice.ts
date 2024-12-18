@@ -1,5 +1,5 @@
 import { api } from '../api';
-import { Product, ProductForm } from '../../types/product.ts';
+import { Product, RateProduct } from '../../types/Product.ts';
 
 export const productApiSlice = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -50,6 +50,13 @@ export const productApiSlice = api.injectEndpoints({
             }),
             invalidatesTags: ['Product'],
         }),
+        rateProduct: builder.mutation<void, RateProduct>({
+            query: (credentials) => ({
+                url: `/products?productId=${credentials.productId}&&rating=${credentials.rating}`,
+                method: 'patch',
+            }),
+            invalidatesTags: ['Product'],
+        }),
     }),
 });
 
@@ -60,4 +67,5 @@ export const {
     usePostProductMutation,
     useGetBestSellersQuery,
     useGetNewProductsQuery,
+    useRateProductMutation,
 } = productApiSlice;

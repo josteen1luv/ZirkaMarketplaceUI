@@ -195,13 +195,27 @@ const Header = ({ onThemeToggle, isDarkMode }: Props) => {
                     {role === 2 ? (
                         <Link to={'/cartPage'}>
                             <IconButton aria-label="cart" size="large">
-                                <ShoppingCartIcon fontSize="inherit" />
+                                {isDarkMode ? (
+                                    <ShoppingCartIcon
+                                        fontSize="inherit"
+                                        sx={{ color: 'white' }}
+                                    />
+                                ) : (
+                                    <ShoppingCartIcon fontSize="inherit" />
+                                )}
                             </IconButton>
                         </Link>
                     ) : null}
                     <Link to={role ? '/dashboard' : '/login'}>
                         <IconButton aria-label="profile" size="large">
-                            <PersonIcon fontSize="inherit" />
+                            {isDarkMode ? (
+                                <PersonIcon
+                                    fontSize="inherit"
+                                    sx={{ color: 'white' }}
+                                />
+                            ) : (
+                                <PersonIcon fontSize="inherit" />
+                            )}
                         </IconButton>
                     </Link>
                     <IconButton onClick={onThemeToggle} size="large">

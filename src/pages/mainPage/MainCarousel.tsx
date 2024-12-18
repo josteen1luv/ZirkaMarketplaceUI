@@ -1,7 +1,7 @@
 import { Typography, Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 

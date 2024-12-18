@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import { useGetSingleCategoryQuery } from '../../api/category/categoryApiSlice.ts';
 import { Category } from '../../types/Category.ts';
 import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';

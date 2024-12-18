@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Container } from '@mui/material';
 import { useGetSingleProductQuery } from '../../api/product/productApiSlice.ts';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 import SingleProductItem from './SingleProductItem.tsx';
 
 const SingleProductPage = () => {

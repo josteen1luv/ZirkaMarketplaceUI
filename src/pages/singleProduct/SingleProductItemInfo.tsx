@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, CardMedia, Rating, Typography } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 
 const SingleProductItemInfo = ({ product }: { product: Product }) => {
     return (
@@ -18,8 +18,8 @@ const SingleProductItemInfo = ({ product }: { product: Product }) => {
                 image={product.photoUrl || 'https://via.placeholder.com/200'}
                 alt={product.name}
                 sx={{
-                    width: 300,
-                    height: 300,
+                    width: { xs: 200, sm: 300 },
+                    height: { xs: 200, sm: 300 },
                     borderRadius: 2,
                     objectFit: 'contain',
                 }}
