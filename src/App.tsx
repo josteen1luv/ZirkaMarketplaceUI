@@ -21,7 +21,7 @@ import { useRefreshQuery } from './api/user/authApiSlice.ts';
 import CategoryPage from './pages/categoryPage/CategoryPage.tsx';
 
 function App() {
-    useRefreshQuery();
+    const { isLoading } = useRefreshQuery();
     const dispatch = useDispatch();
     const currentThemeMode = useSelector(selectTheme);
 
@@ -69,9 +69,11 @@ function App() {
                             />
                             <Route path={'/login'} element={<SignIn />} />
                             <Route path={'/register'} element={<SingUp />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route
+                                path={'/dashboard'}
+                                element={<Dashboard isRefreshing={isLoading} />}
+                            />
                         </Routes>
-                        {/*<Footer/>*/}
                     </Container>
                 </Suspense>
             </BrowserRouter>

@@ -3,9 +3,10 @@ import { Box, Button, Typography } from '@mui/material';
 import { Home, Logout, Person, Settings } from '@mui/icons-material';
 import { useLogoutMutation } from '../../api/user/authApiSlice.ts';
 import { useNavigate } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useSelector } from 'react-redux';
 import { selectRole } from '../../api/user/userSlice.ts';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const DashBoardMenu = ({
     activeView,
@@ -13,7 +14,9 @@ const DashBoardMenu = ({
 }: {
     activeView: string;
     setActiveView: React.Dispatch<
-        React.SetStateAction<'home' | 'profile' | 'settings' | 'products'>
+        React.SetStateAction<
+            'home' | 'profile' | 'settings' | 'products' | 'admin'
+        >
     >;
 }) => {
     const role: 0 | 1 | 2 | null = useSelector(selectRole);
@@ -214,6 +217,45 @@ const DashBoardMenu = ({
                             }}
                         >
                             Twoje towary
+                        </Typography>
+                    </Box>
+                ) : null}
+                {role === 0 ? (
+                    <Box
+                        onClick={() => setActiveView('admin')}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            padding: '10px',
+                            borderRadius: '8px',
+                            transition: 'background 0.3s ease',
+                            cursor: 'pointer',
+                            background:
+                                activeView === 'admin'
+                                    ? 'rgba(255, 255, 255, 0.2)'
+                                    : 'transparent',
+                            '&:hover': {
+                                background: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                    >
+                        <AdminPanelSettingsIcon
+                            sx={{
+                                color: 'text.primary',
+                                fontSize: '24px',
+                            }}
+                        />
+                        <Typography
+                            sx={{
+                                display: { xs: 'none', sm: 'block' },
+                                color: 'text.primary',
+                                textDecoration: 'none',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                            }}
+                        >
+                            Panel admina
                         </Typography>
                     </Box>
                 ) : null}

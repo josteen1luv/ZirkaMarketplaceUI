@@ -1,15 +1,21 @@
 import {
+    alpha,
     AppBar,
     Avatar,
     Box,
     Button,
     ButtonGroup,
+    CardMedia,
     CircularProgress,
     Container,
     Dialog,
     IconButton,
+    List,
+    ListItem,
+    ListItemText,
     Menu,
     MenuItem,
+    Popover,
     Toolbar,
     Tooltip,
     Typography,
@@ -17,7 +23,7 @@ import {
 
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import { selectRole } from '../../api/user/userSlice.ts';
+import { selectIsAuth, selectRole } from '../../api/user/userSlice.ts';
 import { useSelector } from 'react-redux';
 import { useGetCategoriesQuery } from '../../api/category/categoryApiSlice.ts';
 import { Category } from '../../types/Category.ts';
@@ -46,6 +52,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
         setAnchorEl(null);
     };
 
+    const isAuth = useSelector(selectIsAuth);
     const role: 0 | 1 | 2 | null = useSelector(selectRole);
 
     const [open, setOpen] = useState(false);
@@ -124,46 +131,107 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                     >
                         Kategorie
                     </Button>
-                    <Dialog
+                    <Popover
+                        sx={{
+                            maxHeight: 780,
+                        }}
                         open={open}
                         onClose={handleClose}
-                        sx={{ div: { alignItems: 'flex-start' } }}
+                        anchorReference="anchorPosition"
+                        anchorPosition={{
+                            top: 200,
+                            left: window.innerWidth / 2,
+                        }}
+                        anchorOrigin={{
+                            vertical: 'center',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'center',
+                            horizontal: 'center',
+                        }}
                     >
-                        <Box
+                        <Typography
+                            variant={'h3'}
                             sx={{
+                                display: 'block',
+                                textAlign: 'center',
+                            }}
+                        >
+                            Kategorie
+                        </Typography>
+                        <List
+                            sx={{
+                                px: 3,
                                 display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: 2,
-                                padding: 2,
+                                flexDirection: 'column',
+                                alignItems: 'center',
                             }}
                         >
                             {!categories ? (
                                 <CircularProgress />
                             ) : (
                                 categories.map((category) => (
-                                    <Link
-                                        to={`/category/${category.id}`}
+                                    <ListItem
+                                        onClick={handleClose}
                                         key={category.id}
+                                        sx={{
+                                            border: '1px solid gray',
+                                            borderRadius: 3,
+                                            m: 2,
+                                        }}
                                     >
-                                        <Button
-                                            variant="contained"
-                                            color="customColor"
-                                            sx={{
-                                                padding: 1.5,
-                                                borderRadius: 2,
-                                            }}
+                                        <Link
+                                            to={`/category/${category.id}`}
                                             key={category.id}
-                                            onClick={handleClose}
                                         >
-                                            <Typography>
-                                                {category.name}
-                                            </Typography>
-                                        </Button>
-                                    </Link>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    gap: 2,
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent:
+                                                            'center',
+                                                    }}
+                                                >
+                                                    <CardMedia
+                                                        component="img"
+                                                        sx={{
+                                                            borderRadius: 6,
+                                                            display: 'block',
+                                                            width: 64,
+                                                            height: 64,
+                                                        }}
+                                                        image={
+                                                            category.photoUrl
+                                                        }
+                                                    />
+                                                </Box>
+
+                                                <Typography
+                                                    variant={'h5'}
+                                                    sx={{
+                                                        display: 'block',
+                                                        textAlign: 'center',
+                                                    }}
+                                                >
+                                                    {category.name}
+                                                </Typography>
+                                            </Box>
+                                        </Link>
+                                    </ListItem>
                                 ))
                             )}
-                        </Box>
-                    </Dialog>
+                        </List>
+                    </Popover>
                     <Search isDarkMode={isDarkMode} />
                     <Box sx={{ width: { md: 0, lg: 100 } }} />
                     {role === undefined ? (
@@ -173,6 +241,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                             sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
                         >
                             <HeaderNav
+                                isAuth={isAuth}
                                 isDarkMode={isDarkMode}
                                 role={role}
                                 onThemeToggle={onThemeToggle}
@@ -237,7 +306,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                             </MenuItem>
                         ) : null}
                         <MenuItem sx={{ padding: 0 }} onClick={handleCloseNav}>
-                            <Link to={role ? '/dashboard' : '/login'}>
+                            <Link to={isAuth ? '/dashboard' : '/login'}>
                                 <IconButton aria-label="profile" size="large">
                                     <PersonIcon
                                         fontSize="inherit"

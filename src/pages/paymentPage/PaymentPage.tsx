@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Typography,
@@ -25,10 +25,6 @@ const PaymentPage = () => {
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [paymentError, setPaymentError] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [selectedButton, setSelectedButton] = useState<'Card' | 'BLIK'>(
-        'Card',
-    );
-    const [blikMessage, setBlikMessage] = useState<string>('');
 
     const [payment] = usePaymentMutation();
 
@@ -90,157 +86,117 @@ const PaymentPage = () => {
 
         setOpenSuccess(true);
         payment(purchaseData);
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             navigate('/');
         }, 1000);
+        return clearTimeout(timeout);
     };
 
-    const handleButtonClick = (button: 'Card' | 'BLIK') => {
-        setSelectedButton(button);
-        if (button === 'BLIK') {
-            setBlikMessage('Ta funkcja jest obecnie niedostępna');
-            setCardNumber('');
-            setCardExpiry('');
-            setCardCVC('');
-        } else {
-            setBlikMessage('');
+    useEffect(() => {
+        if (purchaseData?.purchaseItemDtos.length === 0) {
+            navigate('/');
         }
-    };
-
+    }, [purchaseData, navigate]);
     return (
-        <Box sx={{ padding: 10, maxWidth: 800, margin: '0 auto' }}>
+        <Box
+            sx={{
+                p: 2,
+                maxWidth: 800,
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+            }}
+        >
+            <Typography variant={'h3'}>Płatność</Typography>
+            <TextField
+                label="Numer karty"
+                slotProps={{
+                    input: {
+                        readOnly: true,
+                    },
+                    inputLabel: { sx: { marginTop: -1.2 } },
+                }}
+                variant="outlined"
+                color="secondary"
+                value={cardNumber}
+                onChange={(e) =>
+                    setCardNumber(formatCardNumber(e.target.value))
+                }
+                fullWidth
+                error={cardNumberError}
+                helperText={cardNumberError ? 'Numer karty jest wymagany' : ''}
+                sx={{ mb: 2 }}
+            />
+            <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextField
+                    label="Data ważności (MM/RR)"
+                    slotProps={{
+                        input: {
+                            readOnly: true,
+                        },
+                        inputLabel: { sx: { marginTop: -1.2 } },
+                    }}
+                    variant="outlined"
+                    color="secondary"
+                    value={cardExpiry}
+                    onChange={handleExpiryChange}
+                    fullWidth
+                    error={cardExpiryError}
+                    helperText={
+                        cardExpiryError
+                            ? 'Data ważności jest nieprawidłowa'
+                            : ''
+                    }
+                />
+                <TextField
+                    label="CVC"
+                    slotProps={{
+                        input: {
+                            readOnly: true,
+                        },
+                        inputLabel: { sx: { marginTop: -1.2 } },
+                    }}
+                    variant="outlined"
+                    color="secondary"
+                    value={cardCVC}
+                    onChange={(e) =>
+                        setCardCVC(
+                            e.target.value.replace(/\D/g, '').slice(0, 3),
+                        )
+                    }
+                    fullWidth
+                    error={cardCVCError}
+                    helperText={cardCVCError ? 'CVC jest wymagane' : ''}
+                />
+            </Box>
+
             <Box
                 sx={{
                     display: 'flex',
-                    justifyContent: 'center',
-                    gap: 2,
-                    mb: 4,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mb: 2,
+                    gap: 1,
                 }}
             >
-                <Button
-                    color={'secondary'}
-                    variant={
-                        selectedButton === 'Card' ? 'contained' : 'outlined'
-                    }
-                    onClick={() => handleButtonClick('Card')}
-                >
-                    Karta
-                </Button>
-                <Button
-                    color={'secondary'}
-                    variant={
-                        selectedButton === 'BLIK' ? 'contained' : 'outlined'
-                    }
-                    onClick={() => handleButtonClick('BLIK')}
-                >
-                    BLIK
-                </Button>
+                <Typography variant="body1">Do zapłaty</Typography>
+                <Typography variant="h6">{`${sum.toFixed(2)} PLN`}</Typography>
             </Box>
-            {blikMessage && (
-                <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-                    {blikMessage}
-                </Typography>
-            )}
-            {selectedButton === 'Card' && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        mb: 4,
-                    }}
-                >
-                    <TextField
-                        label="Numer karty"
-                        slotProps={{
-                            input: {
-                                readOnly: true,
-                            },
-                            inputLabel: { sx: { marginTop: -1.2 } },
-                        }}
-                        variant="outlined"
-                        color="secondary"
-                        value={cardNumber}
-                        onChange={(e) =>
-                            setCardNumber(formatCardNumber(e.target.value))
-                        }
-                        fullWidth
-                        error={cardNumberError}
-                        helperText={
-                            cardNumberError ? 'Numer karty jest wymagany' : ''
-                        }
-                        sx={{ mb: 2 }}
-                    />
-                    <Box sx={{ display: 'flex', gap: 2 }}>
-                        <TextField
-                            label="Data ważności (MM/RR)"
-                            slotProps={{
-                                input: {
-                                    readOnly: true,
-                                },
-                                inputLabel: { sx: { marginTop: -1.2 } },
-                            }}
-                            variant="outlined"
-                            color="secondary"
-                            value={cardExpiry}
-                            onChange={handleExpiryChange}
-                            fullWidth
-                            error={cardExpiryError}
-                            helperText={
-                                cardExpiryError
-                                    ? 'Data ważności jest nieprawidłowa'
-                                    : ''
-                            }
-                        />
-                        <TextField
-                            label="CVC"
-                            slotProps={{
-                                input: {
-                                    readOnly: true,
-                                },
-                                inputLabel: { sx: { marginTop: -1.2 } },
-                            }}
-                            variant="outlined"
-                            color="secondary"
-                            value={cardCVC}
-                            onChange={(e) =>
-                                setCardCVC(
-                                    e.target.value
-                                        .replace(/\D/g, '')
-                                        .slice(0, 3),
-                                )
-                            }
-                            fullWidth
-                            error={cardCVCError}
-                            helperText={cardCVCError ? 'CVC jest wymagane' : ''}
-                        />
-                    </Box>
-                </Box>
-            )}
-            {selectedButton === 'Card' && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        mb: 2,
-                    }}
-                >
-                    <Typography variant="body1">Do zapłaty:</Typography>
-                    <Typography variant="h6">${sum.toFixed(2)}</Typography>
-                </Box>
-            )}
-            {selectedButton === 'Card' && (
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    fullWidth
-                    onClick={handlePayment}
-                    disabled={isProcessing}
-                >
-                    ZAPŁAĆ
-                </Button>
-            )}
+
+            <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                onClick={handlePayment}
+                disabled={isProcessing}
+            >
+                ZAPŁAĆ
+            </Button>
+
             <Snackbar
                 open={openSuccess}
                 autoHideDuration={3000}

@@ -17,6 +17,7 @@ import { usePostProductMutation } from '../../api/product/productApiSlice.ts';
 import { useSelector } from 'react-redux';
 import { selectId } from '../../api/user/userSlice.ts';
 import { useGetCategoriesQuery } from '../../api/category/categoryApiSlice.ts';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 const AddProductForm = () => {
     const id = useSelector(selectId);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -44,10 +45,8 @@ const AddProductForm = () => {
         try {
             const productData: ProductForm = {
                 ...otherFields,
-                PhotoUrl: file, // Assign Base64 string here
+                PhotoUrl: file,
             };
-
-            console.log(productData);
 
             const formData = new FormData();
             formData.append('PhotoUrl', productData.PhotoUrl);
@@ -62,9 +61,18 @@ const AddProductForm = () => {
             formData.append('Price', productData.Price.toString());
 
             await postProduct(formData).unwrap();
-            console.log('Product created successfully');
-        } catch (error) {
-            console.error('Error creating product:', error);
+            alert('Product added successfully.');
+        } catch (err) {
+            const error = err as FetchBaseQueryError;
+            const errorData = error.data as {
+                message?: string;
+                errors?: string[];
+            };
+            const errorMessage: string =
+                errorData?.errors?.[0] ||
+                errorData?.message ||
+                'An error occurred.';
+            alert('Adding product failed: ' + errorMessage);
         }
     };
 

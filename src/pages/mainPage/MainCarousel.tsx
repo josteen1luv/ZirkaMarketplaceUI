@@ -10,7 +10,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ProductsListItem from '../../features/productsListItem/ProductsListItem.tsx';
-import { Product } from '../../types/product.ts';
+import { Product } from '../../types/Product.ts';
 
 type Props = {
     title: string;
@@ -32,7 +32,7 @@ const MainCarousel = ({ title, func }: Props) => {
 
     const handleNext = () => {
         setStartIndex((prev) =>
-            prev + maxVisible < products.length ? prev + 1 : 0
+            prev + maxVisible < products.length ? prev + 1 : 0,
         );
     };
 
@@ -40,12 +40,13 @@ const MainCarousel = ({ title, func }: Props) => {
         setStartIndex((prev) => (prev > 0 ? prev - 1 : prev));
     };
 
-    const visibleProducts = products ? products.slice(startIndex, startIndex + maxVisible): [];
+    const visibleProducts = products
+        ? products.slice(startIndex, startIndex + maxVisible)
+        : [];
 
     return (
-        <Box sx={{ height:480}}
-        >
-            <Typography variant="h2" mb={2} sx={{textAlign: 'center'}}>
+        <Box sx={{ height: 480 }}>
+            <Typography variant="h2" mb={2} sx={{ textAlign: 'center' }}>
                 {title}
             </Typography>
 
@@ -57,7 +58,7 @@ const MainCarousel = ({ title, func }: Props) => {
                         position: 'relative',
                         overflow: 'hidden',
                         display: 'flex',
-                        height:415,
+                        height: 415,
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}
@@ -73,7 +74,9 @@ const MainCarousel = ({ title, func }: Props) => {
                                 zIndex: 2,
                                 backgroundColor: 'rgba(0,0,0,0.6)',
                                 color: 'white',
-                                '&:hover': { backgroundColor: 'rgba(0,0,0,0.8)' },
+                                '&:hover': {
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                },
                             }}
                         >
                             <ArrowBackIosIcon />
@@ -91,9 +94,8 @@ const MainCarousel = ({ title, func }: Props) => {
                         {visibleProducts.map((product) => (
                             <Box
                                 key={product.id}
-                                sx={{ 
+                                sx={{
                                     boxSizing: 'border-box',
-                                    
                                 }}
                             >
                                 <ProductsListItem product={product} />

@@ -7,11 +7,12 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { OnThemeToggle } from './Header.tsx';
 type Props = {
+    isAuth: boolean;
     role: number | null;
     isDarkMode: boolean;
     onThemeToggle: OnThemeToggle;
 };
-const HeaderNav = ({ role, isDarkMode, onThemeToggle }: Props) => {
+const HeaderNav = ({ isAuth, role, isDarkMode, onThemeToggle }: Props) => {
     return (
         <>
             {role === 2 ? (
@@ -24,7 +25,7 @@ const HeaderNav = ({ role, isDarkMode, onThemeToggle }: Props) => {
                     </IconButton>
                 </Link>
             ) : null}
-            <Link to={role ? '/dashboard' : '/login'}>
+            <Link to={isAuth ? '/dashboard' : '/login'}>
                 <IconButton aria-label="profile" size="large">
                     <PersonIcon
                         fontSize="inherit"

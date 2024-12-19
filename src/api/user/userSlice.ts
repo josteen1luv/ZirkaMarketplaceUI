@@ -31,14 +31,12 @@ const userSlice = createSlice({
                     }
 
                     state.isAuth = true;
-                    // localStorage.setItem('token', action.payload.accessToken);
                 },
             )
             .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
                 state.id = null;
                 state.role = null;
                 state.isAuth = false;
-                // localStorage.removeItem('token');
             })
             .addMatcher(
                 authApi.endpoints.refresh.matchFulfilled,

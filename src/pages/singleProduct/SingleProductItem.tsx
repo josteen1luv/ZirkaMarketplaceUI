@@ -10,7 +10,11 @@ import {
 } from '@mui/material';
 import { Product } from '../../types/Product.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectId, selectRole } from '../../api/user/userSlice.ts';
+import {
+    selectId,
+    selectIsAuth,
+    selectRole,
+} from '../../api/user/userSlice.ts';
 import { Link } from 'react-router-dom';
 import SingleProductItemInfo from './SingleProductItemInfo.tsx';
 import { addProduct, selectPaymentInfo } from '../../api/cart/cartSlice.ts';
@@ -20,6 +24,7 @@ const SingleProductItem = ({ product }: { product: Product }) => {
     const [openRatingDialog, setOpenRatingDialog] = useState(false);
     const [ratingValue, setRatingValue] = useState<number | null>(0);
 
+    const isAuth = useSelector(selectIsAuth);
     const role = useSelector(selectRole);
     const id: string | null = useSelector(selectId);
     const cart = useSelector(selectPaymentInfo).purchaseItemDtos;
@@ -65,7 +70,7 @@ const SingleProductItem = ({ product }: { product: Product }) => {
             }}
         >
             <SingleProductItemInfo product={product} />
-            {!role ? (
+            {isAuth && role === 0 ? null : !role ? (
                 <Link to={'/login'}>
                     <Button
                         variant="contained"

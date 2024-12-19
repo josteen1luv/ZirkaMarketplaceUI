@@ -21,7 +21,6 @@ const ProductsListItem = ({ product }: { product: Product }) => {
                     minHeight: '240px',
                     p: 3,
                     borderRadius: 3,
-                    // border: 1,
                     gap: 1,
                     width: 250,
                     transition: 'transform 0.2s ease, box-shadow 0.2s ease',

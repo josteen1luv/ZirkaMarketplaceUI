@@ -17,8 +17,23 @@ export const categoryApiSlice = api.injectEndpoints({
             }),
             providesTags: ['Category'],
         }),
+        postCategory: builder.mutation<void, FormData>({
+            query: (formData) => ({
+                url: '/categories',
+                method: 'post',
+                data: formData,
+                headers: {
+                    'Skip-Content-Type': true,
+                },
+                formData: true,
+            }),
+            invalidatesTags: ['Category'],
+        }),
     }),
 });
 
-export const { useGetCategoriesQuery, useGetSingleCategoryQuery } =
-    categoryApiSlice;
+export const {
+    useGetCategoriesQuery,
+    useGetSingleCategoryQuery,
+    usePostCategoryMutation,
+} = categoryApiSlice;

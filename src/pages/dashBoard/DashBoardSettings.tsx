@@ -27,6 +27,7 @@ const DashBoardSettings = ({ user }: { user: User }) => {
     const {
         control,
         handleSubmit,
+        reset,
         formState: { errors },
         trigger,
     } = useForm({
@@ -223,7 +224,10 @@ const DashBoardSettings = ({ user }: { user: User }) => {
                                 <Button
                                     variant="outlined"
                                     color="secondary"
-                                    onClick={handleStopEditing}
+                                    onClick={() => {
+                                        reset();
+                                        handleStopEditing();
+                                    }}
                                     sx={{ width: 160 }}
                                 >
                                     Anuluj

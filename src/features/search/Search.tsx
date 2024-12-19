@@ -129,7 +129,7 @@ const Search = React.memo(({ isDarkMode }: Props) => {
                                     <ListItemText
                                         key={product.id}
                                         primary={product.name}
-                                        secondary={`Price: $${product.price}`}
+                                        secondary={`Cena: ${product.price} PLN`}
                                     />
                                 </Link>
                             </ListItem>

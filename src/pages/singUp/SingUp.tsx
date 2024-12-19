@@ -17,6 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRegistrationMutation } from '../../api/user/authApiSlice.ts';
 import { User } from '../../types/User.ts';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { validatePassword } from '../../validation/PasswordValidation.ts';
 export type RegisterUser = User & {
     password: string;
 };
@@ -41,39 +42,6 @@ const SingUp = () => {
         },
         mode: 'all',
     });
-
-    const validatePassword = (password: string) => {
-        const minLength = 8;
-        const minLowercase = 1;
-        const minUppercase = 1;
-        const minNumbers = 1;
-        const minSymbols = 1;
-
-        if (password.length < minLength) {
-            return `Hasło musi mieć co najmniej ${minLength} znaków`;
-        }
-
-        const lowercaseCount = (password.match(/[a-z]/g) || []).length;
-        const uppercaseCount = (password.match(/[A-Z]/g) || []).length;
-        const numberCount = (password.match(/[0-9]/g) || []).length;
-        const symbolCount = (password.match(/[^a-zA-Z0-9]/g) || []).length;
-
-        if (lowercaseCount < minLowercase) {
-            return `Hasło musi zawierać co najmniej ${minLowercase} małą literę`;
-        }
-
-        if (uppercaseCount < minUppercase) {
-            return `Hasło musi zawierać co najmniej ${minUppercase} wielką literę`;
-        }
-
-        if (numberCount < minNumbers) {
-            return `Hasło musi zawierać co najmniej ${minNumbers} cyfrę`;
-        }
-
-        if (symbolCount < minSymbols) {
-            return `Hasło musi zawierać co najmniej ${minSymbols} symbol`;
-        }
-    };
 
     const handleSubmitRegister = async (data: RegisterUser) => {
         try {

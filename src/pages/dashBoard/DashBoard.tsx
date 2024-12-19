@@ -10,10 +10,11 @@ import DashBoardSettings from './DashBoardSettings.tsx';
 import DashBoardMenu from './DashBoardMenu.tsx';
 import DashBoardProducts from './DashBoardProducts.tsx';
 import { useNavigate } from 'react-router-dom';
+import DashboardAdmin from './DashboardAdmin.tsx';
 
-const Dashboard = () => {
+const Dashboard = ({ isRefreshing }: { isRefreshing: boolean }) => {
     const [activeView, setActiveView] = useState<
-        'home' | 'profile' | 'settings' | 'products'
+        'home' | 'profile' | 'settings' | 'products' | 'admin'
     >('home');
     const id = useSelector(selectId) as string;
     const { data } = useGetUserQuery(id, {
@@ -34,16 +35,17 @@ const Dashboard = () => {
     const [user, setUser] = useState(initial);
 
     useEffect(() => {
+        if (!isRefreshing && !isAuth) {
+            navigate('/login');
+        }
         if (userInfo) {
             const { firstName, lastName, email, userName, role } = userInfo;
             const newUserState = { firstName, lastName, email, userName, role };
 
             setUser(newUserState);
         }
-    }, [userInfo]);
-    if (!isAuth) {
-        navigate('/login');
-    }
+    }, [userInfo, isAuth, isRefreshing, navigate]);
+
     return (
         <Box
             sx={{
@@ -64,6 +66,7 @@ const Dashboard = () => {
                 {activeView === 'profile' && <DashBoardProfile user={user} />}
                 {activeView === 'settings' && <DashBoardSettings user={user} />}
                 {activeView === 'products' && <DashBoardProducts />}
+                {activeView === 'admin' && <DashboardAdmin />}
             </Box>
         </Box>
     );

@@ -7,3 +7,9 @@ export type Category = {
     photoUrl: string;
     products?: Product[];
 };
+
+export type CategoryForm = {
+    name: string;
+    description: string;
+    photoUrl: Blob | string;
+};
