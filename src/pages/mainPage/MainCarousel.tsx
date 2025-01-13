@@ -20,7 +20,7 @@ type Props = {
 const MainCarousel = ({ title, func }: Props) => {
     const { data } = func();
     const products: Product[] = data || [];
-
+    
     const isCustom575 = useMediaQuery('(max-width:528px)');
     const isSm = useMediaQuery('(max-width:800px)');
     const isMd = useMediaQuery('(max-width:1122px)');
@@ -46,7 +46,7 @@ const MainCarousel = ({ title, func }: Props) => {
 
     return (
         <Box sx={{ height: 480 }}>
-            <Typography variant="h2" mb={2} sx={{ textAlign: 'center' }}>
+            <Typography variant="h2" sx={{ textAlign: 'center' }}>
                 {title}
             </Typography>
 
@@ -58,7 +58,7 @@ const MainCarousel = ({ title, func }: Props) => {
                         position: 'relative',
                         overflow: 'hidden',
                         display: 'flex',
-                        height: 415,
+                        height: 460,
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}
@@ -87,7 +87,7 @@ const MainCarousel = ({ title, func }: Props) => {
                             display: 'flex',
                             flexWrap: 'nowrap',
                             justifyContent: 'space-between',
-                            gap: 1,
+                            gap: 2,
                             transition: 'transform 0.5s ease',
                         }}
                     >

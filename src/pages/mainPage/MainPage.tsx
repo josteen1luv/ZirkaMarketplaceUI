@@ -4,6 +4,8 @@ import {
     useGetBestSellersQuery,
     useGetNewProductsQuery,
 } from '../../api/product/productApiSlice.ts';
+import Banner from './Banners.tsx';
+import Footer from './Footer.tsx';
 
 const MainPage = () => {
     return (
@@ -15,11 +17,13 @@ const MainPage = () => {
                 pt: { xs: 9, sm: 10 },
                 display: 'flex',
                 flexDirection: 'column',
-                gap: { xs: 0, md: 2 },
+                gap: { xs: 0, md: 6 },
             }}
         >
-            <MainCarousel title={'Top sellers'} func={useGetBestSellersQuery} />
+            <Banner />
+            <MainCarousel title={'Bestsellery'} func={useGetBestSellersQuery} />
             <MainCarousel title={'Nowe towary'} func={useGetNewProductsQuery} />
+            <Footer />
         </Container>
     );
 };

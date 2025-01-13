@@ -41,11 +41,11 @@ const CategoryPage = () => {
                         <img
                             src={`${category.photoUrl}`}
                             alt="Placeholder"
-                            style={{ width: '100%', height: 'auto' }}
+                            style={{ width: '100%', height: 'auto', maxHeight: '300px'}}
                         />
                     </Box>
                     <Typography
-                        variant={'h4'}
+                        variant={'h5'}
                         color={'text.secondary'}
                         textAlign="center"
                         sx={{
