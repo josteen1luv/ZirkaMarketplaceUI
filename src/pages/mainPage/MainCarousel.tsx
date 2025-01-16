@@ -20,7 +20,7 @@ type Props = {
 const MainCarousel = ({ title, func }: Props) => {
     const { data } = func();
     const products: Product[] = data || [];
-    
+
     const isCustom575 = useMediaQuery('(max-width:528px)');
     const isSm = useMediaQuery('(max-width:800px)');
     const isMd = useMediaQuery('(max-width:1122px)');
@@ -51,7 +51,16 @@ const MainCarousel = ({ title, func }: Props) => {
             </Typography>
 
             {products.length === 0 ? (
-                <CircularProgress />
+                <Box
+                    sx={{
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <CircularProgress />
+                </Box>
             ) : (
                 <Box
                     sx={{
