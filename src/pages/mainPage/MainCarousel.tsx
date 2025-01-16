@@ -46,19 +46,28 @@ const MainCarousel = ({ title, func }: Props) => {
 
     return (
         <Box sx={{ height: 480 }}>
-            <Typography variant="h2" mb={2} sx={{ textAlign: 'center' }}>
+            <Typography variant="h2" sx={{ textAlign: 'center' }}>
                 {title}
             </Typography>
 
             {products.length === 0 ? (
-                <CircularProgress />
+                <Box
+                    sx={{
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <CircularProgress />
+                </Box>
             ) : (
                 <Box
                     sx={{
                         position: 'relative',
                         overflow: 'hidden',
                         display: 'flex',
-                        height: 415,
+                        height: 460,
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}
@@ -87,7 +96,7 @@ const MainCarousel = ({ title, func }: Props) => {
                             display: 'flex',
                             flexWrap: 'nowrap',
                             justifyContent: 'space-between',
-                            gap: 1,
+                            gap: 2,
                             transition: 'transform 0.5s ease',
                         }}
                     >
