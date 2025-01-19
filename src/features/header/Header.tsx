@@ -96,7 +96,7 @@ const Header = ({ onThemeToggle, isDarkMode }: HeaderProps) => {
                         >
                             <Avatar
                                 alt={'Zirka'}
-                                src={'../../../public/sticker.webp'}
+                                src={'/sticker.webp'}
                                 sx={{ width: 56, height: 56 }}
                             />
                             <Typography
