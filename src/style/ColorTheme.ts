@@ -42,6 +42,10 @@ export const createCustomTheme = (mode: ThemeMode) => {
         dark: {
             mode: 'dark',
             palette: {
+                action: {
+                    disabled: 'rgba(255, 255, 255, 0.5)',
+                    disabledBackground: 'rgba(255, 255, 255, 0.12)',
+                },
                 primary: {
                     main: '#1E1E1E',
                     textContrast: '#ffffff',

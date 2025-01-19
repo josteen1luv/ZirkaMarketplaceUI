@@ -11,10 +11,18 @@ import DashBoardMenu from './DashBoardMenu.tsx';
 import DashBoardProducts from './DashBoardProducts.tsx';
 import { useNavigate } from 'react-router-dom';
 import DashboardAdmin from './DashboardAdmin.tsx';
+import DashBoardShippingSold from './DashBoardShippingSold.tsx';
+import DashBoardShippingBought from './DashBoardShippingBought.tsx';
 
 const Dashboard = ({ isRefreshing }: { isRefreshing: boolean }) => {
     const [activeView, setActiveView] = useState<
-        'home' | 'profile' | 'settings' | 'products' | 'admin'
+        | 'home'
+        | 'profile'
+        | 'settings'
+        | 'products'
+        | 'admin'
+        | 'sold'
+        | 'bought'
     >('home');
     const id = useSelector(selectId) as string;
     const { data } = useGetUserQuery(id, {
@@ -67,6 +75,8 @@ const Dashboard = ({ isRefreshing }: { isRefreshing: boolean }) => {
                 {activeView === 'settings' && <DashBoardSettings user={user} />}
                 {activeView === 'products' && <DashBoardProducts />}
                 {activeView === 'admin' && <DashboardAdmin />}
+                {activeView === 'sold' && <DashBoardShippingSold />}
+                {activeView === 'bought' && <DashBoardShippingBought />}
             </Box>
         </Box>
     );

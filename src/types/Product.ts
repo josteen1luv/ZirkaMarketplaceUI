@@ -7,6 +7,7 @@ export type Product = {
     photoUrl: string;
     availableAmount: number;
     userId: string;
+    status: number;
 };
 
 export interface ProductForm {
