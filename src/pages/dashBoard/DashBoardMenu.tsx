@@ -7,6 +7,8 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useSelector } from 'react-redux';
 import { selectRole } from '../../api/user/userSlice.ts';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 const DashBoardMenu = ({
     activeView,
@@ -15,7 +17,13 @@ const DashBoardMenu = ({
     activeView: string;
     setActiveView: React.Dispatch<
         React.SetStateAction<
-            'home' | 'profile' | 'settings' | 'products' | 'admin'
+            | 'home'
+            | 'profile'
+            | 'settings'
+            | 'products'
+            | 'admin'
+            | 'bought'
+            | 'sold'
         >
     >;
 }) => {
@@ -256,6 +264,84 @@ const DashBoardMenu = ({
                             }}
                         >
                             Panel admina
+                        </Typography>
+                    </Box>
+                ) : null}
+                {role === 1 ? (
+                    <Box
+                        onClick={() => setActiveView('sold')}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            padding: '10px',
+                            borderRadius: '8px',
+                            transition: 'background 0.3s ease',
+                            cursor: 'pointer',
+                            background:
+                                activeView === 'sold'
+                                    ? 'rgba(255, 255, 255, 0.2)'
+                                    : 'transparent',
+                            '&:hover': {
+                                background: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                    >
+                        <ShoppingCartCheckoutIcon
+                            sx={{
+                                color: 'text.primary',
+                                fontSize: '24px',
+                            }}
+                        />
+                        <Typography
+                            sx={{
+                                display: { xs: 'none', sm: 'block' },
+                                color: 'text.primary',
+                                textDecoration: 'none',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                            }}
+                        >
+                            Sprzedane towary
+                        </Typography>
+                    </Box>
+                ) : null}
+                {role === 2 ? (
+                    <Box
+                        onClick={() => setActiveView('bought')}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            padding: '10px',
+                            borderRadius: '8px',
+                            transition: 'background 0.3s ease',
+                            cursor: 'pointer',
+                            background:
+                                activeView === 'bought'
+                                    ? 'rgba(255, 255, 255, 0.2)'
+                                    : 'transparent',
+                            '&:hover': {
+                                background: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                    >
+                        <LocalMallIcon
+                            sx={{
+                                color: 'text.primary',
+                                fontSize: '24px',
+                            }}
+                        />
+                        <Typography
+                            sx={{
+                                display: { xs: 'none', sm: 'block' },
+                                color: 'text.primary',
+                                textDecoration: 'none',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                            }}
+                        >
+                            Kupione towary
                         </Typography>
                     </Box>
                 ) : null}
