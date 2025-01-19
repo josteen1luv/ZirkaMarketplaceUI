@@ -8,19 +8,19 @@ const Banner: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const slides = [
         {
-            imageUrl: '/jakilaptop.png',
-            Url: 'https://www.youtube.com/watch?v=-9C-sQTzaA8&ab_channel=JustJosh',
-        },
-        {
-            imageUrl: '/iphone.png',
-            Url: '/products',
-        },
-        {
-            imageUrl: '/odkurzac.png',
-            Url: '/products',
-        },
-        {
             imageUrl: '/telewizor.png',
+            Url: '/products',
+        },
+        {
+            imageUrl: '/telefon.png',
+            Url: '/products',
+        },
+        {
+            imageUrl: '/flip.png',
+            Url: '/products',
+        },
+        {
+            imageUrl: '/watch.png',
             Url: '/products',
         },
         {
