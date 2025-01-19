@@ -3,6 +3,7 @@ import { RootState } from '../../store';
 import { cartApi } from './cartApiSlice.ts';
 
 export type PurchaseItemDtos = {
+    userId: string;
     productId: string;
     quantity: number;
     price: number;

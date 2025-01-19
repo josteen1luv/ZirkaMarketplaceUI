@@ -31,13 +31,14 @@ const SingleProductItem = ({ product }: { product: Product }) => {
     const dispatch = useDispatch();
 
     const [rate] = useRateProductMutation();
-
     const handleAddToCart = () => {
         if (product?.availableAmount === 0) {
             alert('Prodult się skończył');
         }
         if (cart.filter((elem) => elem.productId === product.id).length === 0) {
-            dispatch(addProduct({ productId: product.id, quantity: 1 }));
+            dispatch(
+                addProduct({ userId: id, productId: product.id, quantity: 1 }),
+            );
             alert('Produkt był dodany do koszyka');
         } else {
             alert('Ten produkt już jest w koszyku');
