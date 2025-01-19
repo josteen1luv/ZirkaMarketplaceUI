@@ -51,7 +51,16 @@ const MainCarousel = ({ title, func }: Props) => {
             </Typography>
 
             {products.length === 0 ? (
-                <CircularProgress />
+                <Box
+                    sx={{
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <CircularProgress />
+                </Box>
             ) : (
                 <Box
                     sx={{
