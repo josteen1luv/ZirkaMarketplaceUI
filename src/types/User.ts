@@ -6,4 +6,8 @@ export type User = {
     role: Roles;
 };
 
+export type GoogleAuth = {
+    authUrl: string;
+};
+
 export type Roles = 0 | 1 | 2;

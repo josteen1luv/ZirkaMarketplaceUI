@@ -1,8 +1,18 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Card, Typography, TextField, Button } from '@mui/material';
+import {
+    Box,
+    Card,
+    Typography,
+    TextField,
+    Button,
+    Divider,
+} from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../api/user/authApiSlice.ts';
+import {
+    useGoogleAuthQuery,
+    useLoginMutation,
+} from '../../api/user/authApiSlice.ts';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { validatePassword } from '../../validation/PasswordValidation.ts';
 
@@ -14,7 +24,8 @@ type LoginForm = {
 const SingIn = () => {
     const [login] = useLoginMutation();
     const navigate = useNavigate();
-
+    const { data } = useGoogleAuthQuery();
+    const linkToGoogleAuth = data?.authUrl;
     const { handleSubmit, control, trigger } = useForm<LoginForm>({
         defaultValues: {
             userName: '',
@@ -55,7 +66,7 @@ const SingIn = () => {
                 <Card
                     elevation={4}
                     sx={{
-                        width: 450,
+                        width: 550,
                         backgroundColor: 'primary.main',
                         p: 3,
                         borderRadius: 3,
@@ -140,6 +151,41 @@ const SingIn = () => {
                                     />
                                 )}
                             />
+                        </Box>
+                        <Divider
+                            orientation="vertical"
+                            flexItem
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                width: '1px',
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 2,
+                                width: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Link
+                                to={linkToGoogleAuth ? linkToGoogleAuth : '/'}
+                            >
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        backgroundColor: '#444',
+                                        color: '#fff',
+                                        textTransform: 'none',
+                                        '&:hover': { backgroundColor: '#555' },
+                                    }}
+                                >
+                                    Zaloguj przez Google
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
                     <Box sx={{ width: '100%', mt: 3 }}>

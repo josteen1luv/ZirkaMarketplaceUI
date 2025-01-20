@@ -1,5 +1,5 @@
 import { api } from '../api';
-import { User } from '../../types/User.ts';
+import { GoogleAuth, User } from '../../types/User.ts';
 import { AuthResponse } from '../../types/AuthResponse.ts';
 import { RegisterUser } from '../../pages/singUp/SingUp.tsx';
 
@@ -30,6 +30,12 @@ export const authApi = api.injectEndpoints({
             query: () => ({
                 url: '/users/logout',
                 method: 'post',
+            }),
+        }),
+        googleAuth: builder.query<GoogleAuth, void>({
+            query: () => ({
+                url: '/users/googleLogin',
+                method: 'get',
             }),
         }),
         getAllUsers: builder.query<User[], void>({
@@ -74,4 +80,5 @@ export const {
     useGetAllUsersQuery,
     useGetUserQuery,
     useUpdateUserMutation,
+    useGoogleAuthQuery,
 } = authApi;
