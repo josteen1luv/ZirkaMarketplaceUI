@@ -3,34 +3,35 @@ import { Box, IconButton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom';
 
 const Banner: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const navigate = useNavigate();
     const slides = [
         {
             imageUrl: '/telewizor.png',
-            Url: '/products',
+            Url: `/products/${import.meta.env.VITE_TELEWIZOR_ID}`,
         },
         {
             imageUrl: '/telefon.png',
-            Url: '/products',
+            Url: `/products/${import.meta.env.VITE_TELEFON_ID}`,
         },
         {
             imageUrl: '/flip.png',
-            Url: '/products',
+            Url: `/products/${import.meta.env.VITE_FLIP_ID}`,
         },
         {
             imageUrl: '/watch.png',
-            Url: '/products',
+            Url: `/products/${import.meta.env.VITE_WATCH_ID}`,
         },
         {
             imageUrl: '/monitor.png',
-            Url: '/products',
+            Url: `/products/${import.meta.env.VITE_MONITOR_ID}`,
         },
     ];
     const handleImageClick = () => {
-        console.log('Image clicked!');
-        window.open(slides[activeIndex].Url, '_blank');
+        navigate(slides[activeIndex].Url);
     };
     const goToPreviousSlide = () => {
         setActiveIndex((prevIndex) =>
