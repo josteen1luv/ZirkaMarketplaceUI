@@ -1,43 +1,42 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { Product } from '../../types/Product.ts';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import DashBoardShippingItem from './DashBoardShippingItem.tsx';
+import { useSelector } from 'react-redux';
+import { selectId } from '../../api/user/userSlice.ts';
+import { useGetShippingBySellerQuery } from '../../api/shipping/shippingApiSlice.ts';
+import { Shipping } from '../../types/Shipping.ts';
 
 const DashBoardShippingSold = () => {
-    const products: Product[] = [
-        {
-            id: '222',
-            name: '123456789012345',
-            photoUrl:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nzY-ddC6PcaerdlhR15HzGVdop_PO6Px9A&s',
-            availableAmount: 1,
-            description: '222222222',
-            price: 4444,
-            rating: 5,
-            userId: '2222',
-            status: 1,
-        },
-        {
-            id: '222',
-            name: '123456789012345',
-            photoUrl:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nzY-ddC6PcaerdlhR15HzGVdop_PO6Px9A&s',
-            availableAmount: 1,
-            description: '222222222',
-            price: 4444,
-            rating: 5,
-            userId: '2222',
-            status: 0,
-        },
-    ];
+    const id = useSelector(selectId);
+    const { data } = useGetShippingBySellerQuery(id as string);
+    const purchases: Shipping[] | undefined = data;
+
+    if (!purchases) {
+        return (
+            <Box
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     return (
         <Box>
             <Typography variant="h4" sx={{ marginBottom: '20px' }}>
                 Zarządzaj sprzedanymi towarami
             </Typography>
-            {products.map((e) => (
-                <DashBoardShippingItem key={e.id} product={e} action={'sell'} />
+            {purchases.map((e: Shipping) => (
+                <DashBoardShippingItem
+                    key={e.product.id}
+                    shipping={e}
+                    action={'sell'}
+                />
             ))}
         </Box>
     );
